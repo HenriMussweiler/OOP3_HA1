@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.MainController">
+
+    <Label text="Hauptmenü" styleClass="menu-label" />
+
+    <Button text="Fahrzeuge" onAction="#handleFahrzeugeButtonClick" />
+    <Button text="Teilnehmer" onAction="#handleTeilnehmerButtonClick" />
+    <Button text="Ausleihvorgänge" onAction="#handleAusleihvorgangButtonClick" />
+    <Button text="Rechnungen" onAction="#handleRechnungButtonClick" />
+
+</VBox>
+
+
+
+

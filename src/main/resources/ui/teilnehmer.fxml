@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.TeilnehmerController">
+
+    <Label text="Name:" />
+    <TextField fx:id="nameField" />
+
+    <Label text="Vorname:" />
+    <TextField fx:id="vornameField" />
+
+    <Label text="Straße:" />
+    <TextField fx:id="strasseField" />
+
+    <Label text="Hausnummer:" />
+    <TextField fx:id="hausnummerField" />
+
+    <Label text="Postleitzahl:" />
+    <TextField fx:id="plzField" />
+
+    <Label text="Ort:" />
+    <TextField fx:id="ortField" />
+
+    <Label text="IBAN:" />
+    <TextField fx:id="ibanField" />
+
+    <Label text="Mail:" />
+    <TextField fx:id="mailField" />
+
+    <Label text="Telefon:" />
+    <TextField fx:id="telefonField" />
+
+    <Button text="Hinzufügen" onAction="#handleHinzufuegenButton" />
+    <Button text="Ändern" onAction="#handleAendernButton" />
+    <Button text="Löschen" onAction="#handleLoeschenButton" />
+
+</VBox>
