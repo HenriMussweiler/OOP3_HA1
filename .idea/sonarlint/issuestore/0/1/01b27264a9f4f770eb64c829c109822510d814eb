@@ -1,0 +1,13 @@
+
+u	java:S116"TRename this field "UNIT_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(äúšÞøÿÿÿÿ8·Ì£ÿ¼1
+C
+java:S1170"!Make this final field static too.(äúšÞøÿÿÿÿ8·Ì£ÿ¼1
+U
+java:S5993"9Change the visibility of this constructor to "protected".(Î¯ÒJ8·Ì£ÿ¼1
+[
+java:S5993"9Change the visibility of this constructor to "protected".(‘Ç¼âüÿÿÿÿ8¸Ì£ÿ¼1
+L	java:S1061"+Replace this use of System.out by a logger.(«Ž¿÷øÿÿÿÿ8»Ì£ÿ¼1
+L	java:S106M"+Replace this use of System.out by a logger.(ÔÍ¬‰ùÿÿÿÿ8½Ì£ÿ¼1
+I
+java:S1905\"'Remove this unnecessary cast to "List".(µ¹’ðùÿÿÿÿ8¾Ì£ÿ¼1
+L	java:S106^"+Replace this use of System.out by a logger.(ÔÍ¬‰ùÿÿÿÿ8¾Ì£ÿ¼1
