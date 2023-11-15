@@ -1,75 +1,124 @@
 package controller;
 
 import core.service.FahrzeugService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import core.model.Fahrzeug;
 import core.service.IFahrzeugService;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+import javafx.scene.control.Alert;
+
 
 public class FahrzeugController {
 
     @FXML
-    private TextField herstellerField;
+    private Label fahrzeugUebersichtLabel;
 
     @FXML
-    private TextField modellField;
+    private ListView<Fahrzeug> fahrzeugListView;
 
     @FXML
-    private TextField kennzeichenField;
+    private Button hinzufuegenButton;
 
     @FXML
-    private Button speichernButton;
+    private Button aendernButton;
+
+    @FXML
+    private Button loeschenButton;
 
     @FXML
     private Button zurueckButton;
+
+    @FXML
+    private Label fahrzeugIdLabel;
+
+    @FXML
+    private ComboBox<Long> fahrzeugId;
 
     private IFahrzeugService<Fahrzeug> fahrzeugService = new FahrzeugService();
 
     @FXML
     private void initialize() {
         // Initialisierung, wenn nötig
+        initFahrzeugListView();
+        initFahrzeugIdComboBox();
     }
 
-    @FXML
-    private void handleSpeichernButtonClick() {
-        String hersteller = herstellerField.getText();
-        String modell = modellField.getText();
-        String kennzeichen = kennzeichenField.getText();
+    private void initFahrzeugListView() {
+        // Hier kannst du die Logik für die Anzeige der Fahrzeuge implementieren
+        ObservableList<Fahrzeug> fahrzeuge = FXCollections.observableArrayList(fahrzeugService.findAll());
+        fahrzeugListView.setItems(fahrzeuge);
+    }
 
-        if (hersteller.isEmpty() || modell.isEmpty() || kennzeichen.isEmpty()) {
-            showAlert("Bitte füllen Sie alle Felder aus.");
-        } else {
-            try {
-                Fahrzeug neuesFahrzeug = new Fahrzeug(hersteller, modell);
-                fahrzeugService.save(neuesFahrzeug);
-                showAlert("Fahrzeug erfolgreich angelegt.");
-                clearFields();
-            } catch (Exception e) {
-                showAlert("Fahrzeug konnte nicht angelegt werden.");
-            }
+    private void initFahrzeugIdComboBox() {
+        ObservableList<Long> fahrzeugIds = FXCollections.observableArrayList(fahrzeugService.findAll().stream()
+                .map(Fahrzeug::getFahrzeugId)
+                .collect(Collectors.toList())
+        );
+        fahrzeugId.setItems(fahrzeugIds);
+    }
+
+//    @FXML
+//    private void hinzufuegenButtonClicked() {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/fahrzeugErstellen.fxml"));
+//            Parent root = loader.load();
+//
+//            FahrzeugErstellenController controller = loader.getController();
+//            controller.setFahrzeugController(this);
+//
+//            Scene scene = new Scene(root);
+//            Stage stage = new Stage();
+//            stage.setScene(scene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    @FXML
+    private void hinzufuegenButtonClicked() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/fahrzeugErstellen.fxml"));
+            Parent root = loader.load();
+
+            FahrzeugErstellenController controller = loader.getController();
+            controller.setFahrzeugController(this);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(hinzufuegenButton.getScene().getWindow());
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+
     @FXML
-    private void handleAendernButtonClick() {
+    private void aendernButtonClicked() {
         // Hier kannst du die Logik für die Änderung eines Fahrzeugs implementieren
     }
 
     @FXML
-    private void handleLoeschenButtonClick() {
+    private void loeschenButtonClicked() {
         // Hier kannst du die Logik für das Löschen eines Fahrzeugs implementieren
     }
 
     @FXML
-    private void handleZurueckButtonClick() {
+    private void zurueckButtonClicked() {
         // Hier kannst du die Logik für den "Zurück"-Button implementieren
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main.fxml"));
@@ -94,8 +143,8 @@ public class FahrzeugController {
     }
 
     private void clearFields() {
-        herstellerField.clear();
-        modellField.clear();
-        kennzeichenField.clear();
+//        herstellerField.clear();
+//        modellField.clear();
+//        kennzeichenField.clear();
     }
 }

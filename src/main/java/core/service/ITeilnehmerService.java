@@ -1,4 +1,15 @@
 package core.service;
 
-public interface ITeilnehmerService {
+import java.util.List;
+
+public interface ITeilnehmerService<T> {
+    void save(T entity);
+
+    T update(T entity);
+
+    boolean delete(long entityId);
+
+    T find(long entityId);
+
+    List<T> findAll();
 }

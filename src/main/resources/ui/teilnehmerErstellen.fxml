@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="604.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TeilnehmerErstellenController">
+
+    <children>
+        <Label layoutX="86.0" layoutY="51.0" text="Neuen Teilnehmer erstellen">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameField" layoutX="86.0" layoutY="100.0" promptText="Name" />
+        <TextField fx:id="vornameField" layoutX="86.0" layoutY="150.0" promptText="Vorname" />
+        <TextField fx:id="strasseField" layoutX="86.0" layoutY="200.0" promptText="Strasse" />
+        <TextField fx:id="hausnummerField" layoutX="86.0" layoutY="250.0" promptText="Hausnummer" />
+        <TextField fx:id="plzField" layoutX="86.0" layoutY="300.0" promptText="Postleitzahl" />
+        <TextField fx:id="ortField" layoutX="86.0" layoutY="350.0" promptText="Ort" />
+        <TextField fx:id="ibanField" layoutX="86.0" layoutY="400.0" promptText="IBAN" />
+        <TextField fx:id="mailField" layoutX="86.0" layoutY="450.0" promptText="Mail" />
+        <TextField fx:id="telefonField" layoutX="86.0" layoutY="500.0" promptText="Telefon" />
+        <Button fx:id="speichernButton" layoutX="371.0" layoutY="551.0" onAction="#speichernButtonClicked" text="Speichern" />
+        <Button fx:id="zurueckButton" layoutX="86.0" layoutY="551.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+    </children>
+</AnchorPane>

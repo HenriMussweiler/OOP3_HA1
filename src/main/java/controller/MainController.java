@@ -18,22 +18,27 @@ public class MainController {
     }
 
     @FXML
-    private void handleFahrzeugeButtonClick() {
+    private void fahrzeugButtonClicked() {
         loadView("/ui/fahrzeug.fxml", "Fahrzeugverwaltung");
     }
 
     @FXML
-    private void handleTeilnehmerButtonClick() {
+    private void teilnehmerButtonClicked() {
         loadView("/ui/teilnehmer.fxml", "Teilnehmerverwaltung");
     }
 
     @FXML
-    private void handleAusleihvorgangButtonClick() {
+    private void ausleihvorgangButtonClicked() {
         loadView("/ui/ausleihvorgang.fxml", "Ausleihvorgangverwaltung");
     }
 
     @FXML
-    private void handleRechnungButtonClick() {
+    private void sharingButtonClicked() {
+        loadView("/ui/sharingStandort.fxml", "Sharingverwaltung");
+    }
+
+    @FXML
+    private void rechnungButtonClicked() {
         loadView("/ui/rechnung.fxml", "Rechnungsverwaltung");
     }
 
@@ -49,6 +54,7 @@ public class MainController {
             // Setze die neue Szene auf die aktuelle Bühne (primaryStage)
             primaryStage.setScene(scene);
             primaryStage.setTitle(title);
+            primaryStage.sizeToScene();
 
         } catch (IOException e) {
             showErrorAlert("Fehler beim Laden der Ansicht");

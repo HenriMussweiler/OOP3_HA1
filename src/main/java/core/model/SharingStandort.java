@@ -20,5 +20,29 @@ public class SharingStandort {
 
     // Konstruktor, Getter und Setter hier...
 
+    public SharingStandort() {
+    }
+
+    public SharingStandort(Long sharingStandortId, String standortName) {
+        this.sharingStandortId = sharingStandortId;
+        this.standortName = standortName;
+    }
+
+    public Long getSharingStandortId() {
+        return sharingStandortId;
+    }
+
+    public void setSharingStandortId(Long sharingStandortId) {
+        this.sharingStandortId = sharingStandortId;
+    }
+
+    public String getStandortName() {
+        return standortName;
+    }
+
+    public void setStandortName(String standortName) {
+        this.standortName = standortName;
+    }
+
     // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
 }
