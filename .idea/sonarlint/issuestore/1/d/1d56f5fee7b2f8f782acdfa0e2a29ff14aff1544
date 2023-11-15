@@ -1,0 +1,9 @@
+
+t
+java:S6204A"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8ý¨Î¨½1
+]	java:S125G"<This block of commented-out lines of code should be removed.(Å™äßþÿÿÿÿ8ÆÃð¨½1
+X	java:S125’"<This block of commented-out lines of code should be removed.(ï”æS8…©Î¨½1
+L
+java:S1144‹".Remove this unused private "showAlert" method.(Àß½å8…©Î¨½1
+S
+java:S1144‘"0Remove this unused private "clearFields" method.(œÕ“úÿÿÿÿ8…©Î¨½1
