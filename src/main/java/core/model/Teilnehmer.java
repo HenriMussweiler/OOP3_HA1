@@ -43,8 +43,7 @@ public class Teilnehmer {
     public Teilnehmer() {
     }
 
-    public Teilnehmer(Long teilnehmerId, String name, String vorname, String strasse, String hausnummer, String postleitzahl, String ort, String iban, String mail, String telefon) {
-        this.teilnehmerId = teilnehmerId;
+    public Teilnehmer(String name, String vorname, String strasse, String hausnummer, String postleitzahl, String ort, String iban, String mail, String telefon) {
         this.name = name;
         this.vorname = vorname;
         this.strasse = strasse;

@@ -5,16 +5,17 @@ import core.model.SharingStandort;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FahrzeugErstellenController {
+
+    @FXML
+    public TextField kilometerstandField;
 
     @FXML
     private TextField herstellerField;
@@ -29,19 +30,19 @@ public class FahrzeugErstellenController {
     private TextField leistungField;
 
     @FXML
-    private TextField kraftstoffField;
+    private ComboBox<String> kraftstoffField;
 
     @FXML
     private TextField baujahrField;
 
     @FXML
-    private TextField getriebeField;
+    private ComboBox<String> getriebeField;
 
     @FXML
     private TextField sitzplaetzeField;
 
     @FXML
-    private ComboBox<String> sharingComboBox;
+    private ComboBox<SharingStandort> sharingComboBox;
 
     @FXML
     private Button speichernButton;
@@ -60,18 +61,62 @@ public class FahrzeugErstellenController {
             // Handle null fahrzeugController, z.B. durch eine Fehlermeldung oder ein Log-Statement
             showAlert("Fehler beim Initialisieren des FahrzeugControllers.");
         }
+        initGetriebeComboBox();
+        initKraftstoffComboBox();
+    }
+
+    private void initKraftstoffComboBox() {
+        // Hier kannst du die Logik für die Anzeige der Kraftstoffe implementieren
+        ObservableList<String> kraftstoffe = FXCollections.observableArrayList("Benzin", "Diesel", "Elektro", "Hybrid/Diesel", "Hybrid/Benzin");
+        kraftstoffField.setItems(kraftstoffe);
+    }
+
+    private void initGetriebeComboBox() {
+        // Hier kannst du die Logik für die Anzeige der Getriebe implementieren
+        ObservableList<String> getriebe = FXCollections.observableArrayList("Automatik", "Manuell");
+        getriebeField.setItems(getriebe);
     }
 
     private void initSharingComboBox() {
         // Hier kannst du die Logik für die Anzeige der Sharing-Standorte implementieren
         List<SharingStandort> sharingStandortList = fahrzeugController.getSharingStandortService().findAll();
 
-        ObservableList<String> sharingStandorte = sharingStandortList.stream()
-                .map(SharingStandort::getStandortName)
-                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        ObservableList<SharingStandort> sharingStandorte = FXCollections.observableArrayList(sharingStandortList);
+
+        sharingComboBox.setCellFactory(new Callback<>() {
+            @Override
+            public ListCell<SharingStandort> call(ListView<SharingStandort> param) {
+                return new ListCell<>() {
+                    @Override
+                    protected void updateItem(SharingStandort sharingStandort, boolean empty) {
+                        super.updateItem(sharingStandort, empty);
+
+                        if (sharingStandort == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(sharingStandort.getStandortName());
+                        }
+                    }
+                };
+            }
+        });
+
+        sharingComboBox.setConverter(new StringConverter<SharingStandort>() {
+            @Override
+            public String toString(SharingStandort object) {
+                return object == null ? null : object.getStandortName();
+            }
+
+            @Override
+            public SharingStandort fromString(String string) {
+                // Du kannst hier die Umwandlung von String zu SharingStandort implementieren, falls notwendig
+                return null;
+            }
+        });
 
         sharingComboBox.setItems(sharingStandorte);
     }
+
 
 
 
@@ -81,24 +126,25 @@ public class FahrzeugErstellenController {
         String modell = modellField.getText();
         String ausstattung = ausstattungField.getText();
         String leistung = leistungField.getText();
-        String kraftstoff = kraftstoffField.getText();
+        String kraftstoff = kraftstoffField.getValue();
         String baujahr = baujahrField.getText();
-        String getriebe = getriebeField.getText();
+        String kilometerstand = kilometerstandField.getText();
+        String getriebe = getriebeField.getValue();
         String sitzplaetze = sitzplaetzeField.getText();
-        String sharingStandort = sharingComboBox.getValue();
+        SharingStandort sharingStandort = sharingComboBox.getValue();
 
         if (hersteller.isEmpty() || modell.isEmpty() || ausstattung.isEmpty() || leistung.isEmpty() ||
                 kraftstoff.isEmpty() || baujahr.isEmpty() || getriebe.isEmpty() || sitzplaetze.isEmpty() ||
-                sharingStandort == null || sharingStandort.isEmpty()) {
+                sharingStandort == null) {
             showAlert("Bitte füllen Sie alle Felder aus.");
         } else {
             try {
-                // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren
-                showAlert("Fahrzeug erfolgreich angelegt.");
                 //Objekt anlegen
-                Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(getriebe), Integer.parseInt(sitzplaetze), sharingStandort);
+                Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(kilometerstand), getriebe, Integer.parseInt(sitzplaetze), sharingStandort);
                 //Objekt speichern
                 fahrzeugController.getFahrzeugService().save(newFahrzeug);
+                // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren
+                showAlert("Fahrzeug erfolgreich angelegt.");
 
                 clearFields();
             } catch (Exception e) {
@@ -112,9 +158,10 @@ public class FahrzeugErstellenController {
         modellField.clear();
         ausstattungField.clear();
         leistungField.clear();
-        kraftstoffField.clear();
+        kilometerstandField.clear();
+        kraftstoffField.getSelectionModel().clearSelection();
         baujahrField.clear();
-        getriebeField.clear();
+        getriebeField.getSelectionModel().clearSelection();
         sitzplaetzeField.clear();
         sharingComboBox.getSelectionModel().clearSelection();
     }

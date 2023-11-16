@@ -3,26 +3,38 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.FahrzeugController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FahrzeugController">
 
    <children>
-      <Label layoutX="229.0" layoutY="40.0" text="Fahrzeugübersicht">
+      <Label layoutX="340.0" layoutY="40.0" text="Fahrzeugübersicht">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ListView fx:id="fahrzeugListView" layoutX="86.0" layoutY="100.0" prefHeight="310.0" prefWidth="450.0" />
-      <Button fx:id="hinzufuegenButton" layoutX="86.0" layoutY="462.0" mnemonicParsing="false" onAction="#hinzufuegenButtonClicked" text="Hinzufügen" />
-      <Button fx:id="aendernButton" layoutX="283.0" layoutY="462.0" mnemonicParsing="false" onAction="#aendernButtonClicked" text="Ändern" />
-      <Button fx:id="loeschenButton" layoutX="472.0" layoutY="462.0" mnemonicParsing="false" onAction="#loeschenButtonClicked" text="Löschen" />
-      <Label layoutX="86.0" layoutY="426.0" text="Zum Ändern oder Löschen bitte FahrzeugID eingeben:" />
-      <ComboBox fx:id="fahrzeugId" layoutX="421.0" layoutY="422.0" prefHeight="26.0" prefWidth="115.0" />
-      <Button fx:id="zurueckButton" layoutX="86.0" layoutY="512.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+      <TableView fx:id="fahrzeugTableView" layoutX="16.0" layoutY="100.0" prefHeight="310.0" prefWidth="769.0">
+         <columns>
+            <TableColumn fx:id="fahrzeugIdColumn" prefWidth="79.0" text="FahrzeugID" />
+            <TableColumn fx:id="modellColumn" prefWidth="42.0" text="Modell" />
+            <TableColumn fx:id="herstellerColumn" prefWidth="64.0" text="Hersteller" />
+            <TableColumn fx:id="ausstattungColumn" prefWidth="72.0" text="Ausstattung" />
+            <TableColumn fx:id="baujahrColumn" prefWidth="55.0" text="Baujahr" />
+            <TableColumn fx:id="getriebeColumn" prefWidth="63.0" text="Getriebe" />
+            <TableColumn fx:id="kilometerstandColumn" prefWidth="91.0" text="Kilometerstand" />
+            <TableColumn fx:id="kraftstoffartColumn" prefWidth="76.0" text="Kraftstoffart" />
+            <TableColumn fx:id="leistungColumn" prefWidth="89.0" text="Leistung [KW]" />
+            <TableColumn fx:id="sitzplaetzeColumn" prefWidth="68.0" text="Sitzplätze" />
+            <TableColumn fx:id="sharingStandortColumn" prefWidth="68.0" text="Standort" />
+         </columns></TableView>
+      <Button fx:id="hinzufuegenButton" layoutX="178.0" layoutY="462.0" mnemonicParsing="false" onAction="#hinzufuegenButtonClicked" text="Hinzufügen" />
+      <Button fx:id="aendernButton" layoutX="372.0" layoutY="462.0" mnemonicParsing="false" onAction="#aendernButtonClicked" text="Ändern" />
+      <Button fx:id="loeschenButton" layoutX="555.0" layoutY="462.0" mnemonicParsing="false" onAction="#loeschenButtonClicked" text="Löschen" />
+      <Label layoutX="178.0" layoutY="427.0" text="Zum Ändern oder Löschen bitte FahrzeugID eingeben:" />
+      <ComboBox fx:id="fahrzeugIdComboBox" layoutX="504.0" layoutY="422.0" prefHeight="26.0" prefWidth="115.0" />
+      <Button fx:id="zurueckButton" layoutX="178.0" layoutY="512.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
    </children>
 </AnchorPane>

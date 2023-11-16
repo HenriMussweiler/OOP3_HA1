@@ -47,8 +47,7 @@ public class Fahrzeug {
     public Fahrzeug() {
     }
 
-    public Fahrzeug(Long fahrzeugId, String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoffart, int baujahr, int kilometerstand, String getriebe, int sitzplaetze, SharingStandort sharingStandort) {
-        this.fahrzeugId = fahrzeugId;
+    public Fahrzeug(String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoffart, int baujahr, int kilometerstand, String getriebe, int sitzplaetze, SharingStandort sharingStandort) {
         this.hersteller = hersteller;
         this.modell = modell;
         this.ausstattung = ausstattung;
@@ -61,20 +60,15 @@ public class Fahrzeug {
         this.sharingStandort = sharingStandort;
     }
 
-    public Fahrzeug(String hersteller, String modell) {
-        this.hersteller = hersteller;
-        this.modell = modell;
-    }
-
-    public Fahrzeug(String hersteller, String modell, String ausstattung, int i, String kraftstoff, int i1, int i2, int i3, String sharingStandort) {
+    public Fahrzeug(String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoff, int baujahr, int kilometerstand, int sitzplaetze, String sharingStandort) {
         this.hersteller = hersteller;
         this.modell = modell;
         this.ausstattung = ausstattung;
-        this.leistungKw = i;
+        this.leistungKw = leistungKw;
         this.kraftstoffart = kraftstoff;
-        this.baujahr = i1;
-        this.kilometerstand = i2;
-        this.sitzplaetze = i3;
+        this.baujahr = baujahr;
+        this.kilometerstand = kilometerstand;
+        this.sitzplaetze = sitzplaetze;
         this.sharingStandort = new SharingStandort(sharingStandort);
     }
 

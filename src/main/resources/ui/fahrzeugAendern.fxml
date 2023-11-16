@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FahrzeugErstellenController">
+<AnchorPane prefHeight="650.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FahrzeugAendernController">
 
     <children>
-        <Label layoutX="70.0" layoutY="44.0" text="Neues Fahrzeug erstellen">
+        <Label layoutX="70.0" layoutY="44.0" text="Fahrzeug bearbeiten">
             <font>
                 <Font size="18.0" />
             </font>

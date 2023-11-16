@@ -3,26 +3,37 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.TeilnehmerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TeilnehmerController">
    <children>
-      <ListView fx:id="teilnehmerListView" layoutX="35.0" layoutY="77.0" prefHeight="302.0" prefWidth="531.0" />
-      <Label layoutX="219.0" layoutY="37.0" text="Teilnehmer Übersicht">
+      <TableView fx:id="teilnehmerTableView" layoutX="31.0" layoutY="76.0" prefHeight="302.0" prefWidth="801.0">
+         <columns>
+            <TableColumn fx:id="teilnehmerIdColumn" text="TeilnehmerID" />
+            <TableColumn fx:id="nameColumn" text="Name" />
+            <TableColumn fx:id="vornameColumn" text="Vorname" />
+            <TableColumn fx:id="strasseColumn" text="Strasse" />
+            <TableColumn fx:id="hausnummerColumn" text="Hausnummer" />
+            <TableColumn fx:id="plzColumn" text="Postleitzahl" />
+            <TableColumn fx:id="ortColumn" text="Ort" />
+            <TableColumn fx:id="ibanColumn" text="IBAN" />
+            <TableColumn fx:id="mailColumn" text="Mail" />
+            <TableColumn fx:id="telefonColumn" text="Telefon" />
+         </columns>
+      </TableView>
+      <Label layoutX="311.0" layoutY="37.0" text="Teilnehmer Übersicht">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="hinzufuegenButton" layoutX="35.0" layoutY="438.0" mnemonicParsing="false" onAction="#hinzufuegenButtonClicked" text="Hinzufügen" />
-      <Button fx:id="aendernButton" layoutX="272.0" layoutY="439.0" mnemonicParsing="false" onAction="#aendernButtonClicked" text="Ändern" />
-      <Button fx:id="loeschenButton" layoutX="502.0" layoutY="439.0" mnemonicParsing="false" onAction="#loeschenButtonClicked" text="Löschen" />
-      <Button fx:id="zurueckButton" layoutX="35.0" layoutY="505.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
-      <Label layoutX="35.0" layoutY="401.0" text="Zum Ändern und Löschen eines Teilnehmers bitte die TeilnehmerID auswählen:" />
-      <ComboBox fx:id="teilnehmerIdComboBox" layoutX="471.0" layoutY="397.0" prefHeight="26.0" prefWidth="95.0" />
+      <Button fx:id="hinzufuegenButton" layoutX="201.0" layoutY="438.0" mnemonicParsing="false" onAction="#hinzufuegenButtonClicked" text="Hinzufügen" />
+      <Button fx:id="aendernButton" layoutX="363.0" layoutY="438.0" mnemonicParsing="false" onAction="#aendernButtonClicked" text="Ändern" />
+      <Button fx:id="loeschenButton" layoutX="502.0" layoutY="438.0" mnemonicParsing="false" onAction="#loeschenButtonClicked" text="Löschen" />
+      <Button fx:id="zurueckButton" layoutX="201.0" layoutY="506.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+      <Label layoutX="138.0" layoutY="404.0" text="Zum Ändern und Löschen eines Teilnehmers bitte die TeilnehmerID auswählen:" />
+      <ComboBox fx:id="teilnehmerIdComboBox" layoutX="594.0" layoutY="400.0" prefHeight="26.0" prefWidth="95.0" />
    </children>
 </AnchorPane>

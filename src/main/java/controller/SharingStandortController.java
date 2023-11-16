@@ -33,14 +33,15 @@ public class SharingStandortController {
             showAlert("Bitte geben Sie den Namen des Standorts ein.");
         } else {
             try {
-                // Hier könntest du die Logik zum Speichern des neuen Sharing-Standorts implementieren
-                showAlert("Sharing-Standort erfolgreich angelegt.");
-
                 // Objekt anlegen
                 SharingStandort newSharingStandort = new SharingStandort(name);
+
                 // Objekt speichern
                 SharingStandortService sharingStandortService = new SharingStandortService();
                 sharingStandortService.save(newSharingStandort);
+
+                // Erfolgsmeldung anzeigen
+                showAlert("Sharing-Standort erfolgreich angelegt.");
 
                 nameField.clear();
             } catch (Exception e) {

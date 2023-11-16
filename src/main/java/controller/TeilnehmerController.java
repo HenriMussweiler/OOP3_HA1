@@ -9,10 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,10 +26,43 @@ public class TeilnehmerController {
     private Button zurueckButton;
 
     @FXML
-    private ListView<Teilnehmer> teilnehmerListView;
+    private TableView<Teilnehmer> teilnehmerTableView;
+
+    @FXML
+    private TableColumn<Teilnehmer, Long> teilnehmerIdColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> nameColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> vornameColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> strasseColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> hausnummerColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> plzColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> ortColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> ibanColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> mailColumn;
+
+    @FXML
+    private TableColumn<Teilnehmer, String> telefonColumn;
 
     @FXML
     private ComboBox<Long> teilnehmerIdComboBox;
+
+    @FXML
+    private Button aendernButton;
 
     private ITeilnehmerService<Teilnehmer> teilnehmerService = new TeilnehmerService();
 
@@ -60,7 +91,29 @@ public class TeilnehmerController {
     @FXML
     private void aendernButtonClicked() {
         // Implementiere die Logik zum Ändern eines Teilnehmers
-        showErrorAlert("Methode handleAendernButton muss implementiert werden");
+
+        // Lade den ausgewählten Teilnehmer aus der Datenquelle
+        Teilnehmer teilnehmer = teilnehmerService.find(teilnehmerIdComboBox.getValue());
+
+        // Öffne das Fenster zum Ändern des Teilnehmers
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/teilnehmerAendern.fxml"));
+            Parent root = loader.load();
+
+            TeilnehmerAendernController controller = loader.getController();
+            controller.setTeilnehmerController(this);
+            controller.setSelectedTeilnehmer(teilnehmer);
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(aendernButton.getScene().getWindow());
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -99,14 +152,33 @@ public class TeilnehmerController {
     @FXML
     private void initialize() {
         // Initialisierung, wenn nötig
-        initTeilnehmerListView();
+        initTeilnehmerTableView();
         initTeilnehmerIdComboBox();
     }
 
-    private void initTeilnehmerListView() {
+    private void initTeilnehmerTableView() {
         // Hier kannst du die Logik für die Anzeige der Fahrzeuge implementieren
-        ObservableList<Teilnehmer> teilnehmer = FXCollections.observableArrayList(teilnehmerService.findAll());
-        teilnehmerListView.setItems(teilnehmer);
+
+        // Erstelle eine leere Liste für die Teilnehmer
+        ObservableList<Teilnehmer> teilnehmer = FXCollections.observableArrayList();
+
+        // Lade die Teilnehmer aus der Datenquelle
+        teilnehmer.addAll(teilnehmerService.findAll());
+
+        // Füge die Teilnehmer der TableView hinzu
+        teilnehmerTableView.setItems(teilnehmer);
+
+        // Erstelle die Spalten und verknüpfe sie mit den Attributen der Teilnehmer
+        teilnehmerIdColumn.setCellValueFactory(new PropertyValueFactory<>("teilnehmerId"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        vornameColumn.setCellValueFactory(new PropertyValueFactory<>("vorname"));
+        strasseColumn.setCellValueFactory(new PropertyValueFactory<>("strasse"));
+        hausnummerColumn.setCellValueFactory(new PropertyValueFactory<>("hausnummer"));
+        plzColumn.setCellValueFactory(new PropertyValueFactory<>("postleitzahl"));
+        ortColumn.setCellValueFactory(new PropertyValueFactory<>("ort"));
+        ibanColumn.setCellValueFactory(new PropertyValueFactory<>("iban"));
+        mailColumn.setCellValueFactory(new PropertyValueFactory<>("mail"));
+        telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefon"));
     }
 
     private void initTeilnehmerIdComboBox() {
@@ -116,4 +188,14 @@ public class TeilnehmerController {
         );
         teilnehmerIdComboBox.setItems(teilnehmerIds);
     }
+
+    public void updateTeilnehmerTableView() {
+        // Lade die Teilnehmer erneut aus der Datenquelle
+        ObservableList<Teilnehmer> teilnehmer = FXCollections.observableArrayList();
+        teilnehmer.addAll(teilnehmerService.findAll());
+
+        // Füge die aktualisierten Teilnehmer der TableView hinzu
+        teilnehmerTableView.setItems(teilnehmer);
+    }
+
 }
