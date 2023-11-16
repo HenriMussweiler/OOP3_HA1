@@ -6,9 +6,16 @@ import dao.GenericDAO;
 public class SharingStandortService extends GenericDAO<SharingStandort> implements ISharingStandortService<SharingStandort> {
 
     @Override
-    public boolean delete(long SharingStandortId) {
-        return false;
+    public boolean delete(long sharingStandortId) {
+        try {
+            super.delete(sharingStandortId, SharingStandort.class);
+            return true; // Erfolgreich gelöscht
+        } catch (Exception e) {
+            System.out.println("Fehler beim Löschen des SharingStandorts mit ID: " + sharingStandortId);
+            return false; // Fehler beim Löschen
+        }
     }
+
 
     @Override
     public void save(SharingStandort SharingStandort) {

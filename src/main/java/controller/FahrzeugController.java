@@ -1,6 +1,9 @@
 package controller;
 
+import core.model.SharingStandort;
 import core.service.FahrzeugService;
+import core.service.ISharingStandortService;
+import core.service.SharingStandortService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,6 +48,12 @@ public class FahrzeugController {
     private ComboBox<Long> fahrzeugId;
 
     private IFahrzeugService<Fahrzeug> fahrzeugService = new FahrzeugService();
+
+    private ISharingStandortService sharingStandortService = new SharingStandortService();
+
+    public static FahrzeugController getInstance() {
+        return new FahrzeugController();
+    }
 
     @FXML
     private void initialize() {
@@ -147,4 +156,13 @@ public class FahrzeugController {
 //        modellField.clear();
 //        kennzeichenField.clear();
     }
+
+    public IFahrzeugService<Fahrzeug> getFahrzeugService() {
+        return fahrzeugService;
+    }
+
+    public ISharingStandortService getSharingStandortService() {
+        return sharingStandortService;
+    }
+
 }

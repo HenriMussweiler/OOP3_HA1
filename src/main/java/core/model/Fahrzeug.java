@@ -66,6 +66,18 @@ public class Fahrzeug {
         this.modell = modell;
     }
 
+    public Fahrzeug(String hersteller, String modell, String ausstattung, int i, String kraftstoff, int i1, int i2, int i3, String sharingStandort) {
+        this.hersteller = hersteller;
+        this.modell = modell;
+        this.ausstattung = ausstattung;
+        this.leistungKw = i;
+        this.kraftstoffart = kraftstoff;
+        this.baujahr = i1;
+        this.kilometerstand = i2;
+        this.sitzplaetze = i3;
+        this.sharingStandort = new SharingStandort(sharingStandort);
+    }
+
     public Long getFahrzeugId() {
         return fahrzeugId;
     }

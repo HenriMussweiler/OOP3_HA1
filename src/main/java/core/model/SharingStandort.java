@@ -28,6 +28,10 @@ public class SharingStandort {
         this.standortName = standortName;
     }
 
+    public SharingStandort(String sharingStandort) {
+        this.standortName = sharingStandort;
+    }
+
     public Long getSharingStandortId() {
         return sharingStandortId;
     }

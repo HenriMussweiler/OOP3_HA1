@@ -1,16 +1,18 @@
 package controller;
 
+import core.model.Fahrzeug;
+import core.model.SharingStandort;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FahrzeugErstellenController {
 
@@ -50,6 +52,30 @@ public class FahrzeugErstellenController {
     private FahrzeugController fahrzeugController;
 
     @FXML
+    void initialize() {
+        setFahrzeugController(FahrzeugController.getInstance());
+        if (fahrzeugController != null) {
+            initSharingComboBox();
+        } else {
+            // Handle null fahrzeugController, z.B. durch eine Fehlermeldung oder ein Log-Statement
+            showAlert("Fehler beim Initialisieren des FahrzeugControllers.");
+        }
+    }
+
+    private void initSharingComboBox() {
+        // Hier kannst du die Logik für die Anzeige der Sharing-Standorte implementieren
+        List<SharingStandort> sharingStandortList = fahrzeugController.getSharingStandortService().findAll();
+
+        ObservableList<String> sharingStandorte = sharingStandortList.stream()
+                .map(SharingStandort::getStandortName)
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+
+        sharingComboBox.setItems(sharingStandorte);
+    }
+
+
+
+    @FXML
     private void speichernButtonClicked() {
         String hersteller = herstellerField.getText();
         String modell = modellField.getText();
@@ -69,13 +95,28 @@ public class FahrzeugErstellenController {
             try {
                 // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren
                 showAlert("Fahrzeug erfolgreich angelegt.");
-                // Schließe das Fenster
-                Stage stage = (Stage) herstellerField.getScene().getWindow();
-                stage.close();
+                //Objekt anlegen
+                Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(getriebe), Integer.parseInt(sitzplaetze), sharingStandort);
+                //Objekt speichern
+                fahrzeugController.getFahrzeugService().save(newFahrzeug);
+
+                clearFields();
             } catch (Exception e) {
                 showAlert("Fahrzeug konnte nicht angelegt werden.");
             }
         }
+    }
+
+    private void clearFields() {
+        herstellerField.clear();
+        modellField.clear();
+        ausstattungField.clear();
+        leistungField.clear();
+        kraftstoffField.clear();
+        baujahrField.clear();
+        getriebeField.clear();
+        sitzplaetzeField.clear();
+        sharingComboBox.getSelectionModel().clearSelection();
     }
 
     @FXML

@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import core.model.SharingStandort;
+import core.service.SharingStandortService;
+import javafx.scene.control.Alert;
+
 
 import java.io.IOException;
 
@@ -24,15 +27,26 @@ public class SharingStandortController {
 
     @FXML
     void speichernButtonClicked() {
-        // Hier implementiere die Logik, um den neuen Sharing-Standort zu speichern
         String name = nameField.getText();
 
-        SharingStandort sharingStandort = new SharingStandort();
-        // Hier rufe die Methode auf, um den Sharing-Standort zu speichern
+        if (name.isEmpty()) {
+            showAlert("Bitte geben Sie den Namen des Standorts ein.");
+        } else {
+            try {
+                // Hier könntest du die Logik zum Speichern des neuen Sharing-Standorts implementieren
+                showAlert("Sharing-Standort erfolgreich angelegt.");
 
-        // Schließe das aktuelle Fenster
-        Stage stage = (Stage) speichernButton.getScene().getWindow();
-        stage.close();
+                // Objekt anlegen
+                SharingStandort newSharingStandort = new SharingStandort(name);
+                // Objekt speichern
+                SharingStandortService sharingStandortService = new SharingStandortService();
+                sharingStandortService.save(newSharingStandort);
+
+                nameField.clear();
+            } catch (Exception e) {
+                showAlert("Sharing-Standort konnte nicht angelegt werden.");
+            }
+        }
     }
 
     @FXML
@@ -52,5 +66,11 @@ public class SharingStandortController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
