@@ -10,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class TeilnehmerErstellenController {
-    public void setTeilnehmerController(TeilnehmerController teilnehmerController) {
-    }
 
     @FXML
     private TextField nameField;
@@ -51,6 +49,12 @@ public class TeilnehmerErstellenController {
 
     TeilnehmerService teilnehmerService = new TeilnehmerService();
 
+    private TeilnehmerController teilnehmerController;
+
+    public void setTeilnehmerController(TeilnehmerController teilnehmerController) {
+        this.teilnehmerController = teilnehmerController;
+    }
+
     @FXML
     private void speichernButtonClicked() {
         // Implementiere die Logik für das Speichern des Teilnehmers
@@ -72,9 +76,17 @@ public class TeilnehmerErstellenController {
             } else {
                 //Create new Teilnehmer
                 Teilnehmer newTeilnehmer = new Teilnehmer(name, vorname, strasse, hausnummer, plz, ort, iban, mail, telefon);
+
                 //Save new Teilnehmer
                 teilnehmerService.save(newTeilnehmer);
                 showAlert("Teilnehmer erfolgreich angelegt.");
+
+                //TableView aktualisieren
+                teilnehmerController.initTeilnehmerTableView();
+
+                //ComboBox aktualisieren
+                teilnehmerController.initTeilnehmerIdComboBox();
+
                 //Clear all fields
                 clearFields();
             }

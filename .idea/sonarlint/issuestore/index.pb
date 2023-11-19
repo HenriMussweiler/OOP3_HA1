@@ -248,3 +248,9 @@ f
 6src/main/java/core/service/SharingStandortService.java,5/b/5bb2517206d6e38e287b075441f5ccd273b5edb4
 g
 7src/main/java/core/service/ISharingStandortService.java,3/1/316722f6e2562dcf8e75fa804db1fc4429484325
+g
+7src/main/java/controller/FahrzeugAendernController.java,2/4/246d48f756b5298c7955b3948e54e541b9691381
+i
+9src/main/java/controller/TeilnehmerAendernController.java,f/8/f82645e136851d66611a6cbaca7875b0abfb263a
+m
+=src/main/java/controller/AusleihvorgangAendernController.java,0/b/0bee382b74b7d9afd546665b1ba8519f27da722d

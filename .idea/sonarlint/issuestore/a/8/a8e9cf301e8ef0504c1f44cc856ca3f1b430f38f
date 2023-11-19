@@ -1,3 +1,15 @@
 
-t
-java:S6204s"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8€£©½1
+U
+java:S1135"2Complete the task associated to this TODO comment.(ª†ì„ıÿÿÿÿ8·²—Î¾1
+u
+java:S6204ğ"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8½²—Î¾1
+P
+java:S1172ÿ"2Remove this unused method parameter "actionEvent".(”è¿â8¿²—Î¾1
+R
+java:S1128"0Remove this unused import 'core.model.Fahrzeug'.(´¶ÍÒúÿÿÿÿ8¿²—Î¾1
+W
+java:S1128":Remove this unused import 'core.service.IFahrzeugService'.(Âæ¡œ8¿²—Î¾1
+Z
+java:S1128"8Remove this unused import 'javafx.application.Platform'.(§“óùÿÿÿÿ8¿²—Î¾1
+V
+java:S1144¬"3Remove this unused private "showErrorAlert" method.(õûèØûÿÿÿÿ8¿²—Î¾1

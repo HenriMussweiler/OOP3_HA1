@@ -35,5 +35,6 @@
       <Button fx:id="zurueckButton" layoutX="201.0" layoutY="506.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
       <Label layoutX="138.0" layoutY="404.0" text="Zum Ändern und Löschen eines Teilnehmers bitte die TeilnehmerID auswählen:" />
       <ComboBox fx:id="teilnehmerIdComboBox" layoutX="594.0" layoutY="400.0" prefHeight="26.0" prefWidth="95.0" />
+      <Button fx:id="aktualisierenButton" layoutX="601.0" layoutY="438.0" mnemonicParsing="false" onAction="#aktualisierenButtonClicked" text="Aktualisieren" />
    </children>
 </AnchorPane>

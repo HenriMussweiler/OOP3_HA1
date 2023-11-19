@@ -1,9 +1,13 @@
 
-t
-java:S6204A"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8ý¨Î¨½1
-]	java:S125G"<This block of commented-out lines of code should be removed.(Å™äßþÿÿÿÿ8ÆÃð¨½1
-X	java:S125’"<This block of commented-out lines of code should be removed.(ï”æS8…©Î¨½1
-L
-java:S1144‹".Remove this unused private "showAlert" method.(Àß½å8…©Î¨½1
-S
-java:S1144‘"0Remove this unused private "clearFields" method.(œÕ“úÿÿÿÿ8…©Î¨½1
+Q
+java:S3740W"/Provide the parametrized type for this generic.(‹ß¿œùÿÿÿÿ8”ÏÀÎ¾1
+M
+java:S3740‡"/Provide the parametrized type for this generic.(—êÅð8”ÏÀÎ¾1
+q
+java:S1602„"SRemove useless curly braces around statement and then remove useless return keyword(ý—¾£8§ÏÀÎ¾1
+u
+java:S6204š"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8¨ÏÀÎ¾1
+U
+java:S1135Ò"2Complete the task associated to this TODO comment.(ËùÌóùÿÿÿÿ8¯ÏÀÎ¾1
+P
+java:S1172‹"2Remove this unused method parameter "actionEvent".(”è¿â8°ÏÀÎ¾1

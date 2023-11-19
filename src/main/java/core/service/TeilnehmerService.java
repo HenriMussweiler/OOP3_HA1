@@ -1,12 +1,13 @@
 package core.service;
 
+import core.model.Fahrzeug;
 import core.model.Teilnehmer;
 import dao.GenericDAO;
 
 public class TeilnehmerService extends GenericDAO<Teilnehmer> implements ITeilnehmerService<Teilnehmer> {
     @Override
     public boolean delete(long entityId) {
-        return false;
+        return super.delete(entityId, Teilnehmer.class);
     }
 
     @Override

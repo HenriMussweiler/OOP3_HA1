@@ -26,6 +26,20 @@ public class SharingStandortController {
     private Button zurueckButton;
 
     @FXML
+    private void initialize() {
+        //Testdaten hinzufügen
+        SharingStandort sharingStandort1 = new SharingStandort("Osnabrück");
+        SharingStandort sharingStandort2 = new SharingStandort("Münster");
+        SharingStandort sharingStandort3 = new SharingStandort("Bielefeld");
+
+        //Testdaten speichern
+        SharingStandortService sharingStandortService = new SharingStandortService();
+        sharingStandortService.save(sharingStandort1);
+        sharingStandortService.save(sharingStandort2);
+        sharingStandortService.save(sharingStandort3);
+    }
+
+    @FXML
     void speichernButtonClicked() {
         String name = nameField.getText();
 

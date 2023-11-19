@@ -6,6 +6,7 @@ import core.service.ISharingStandortService;
 import core.service.SharingStandortService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -91,12 +92,30 @@ public class FahrzeugController {
 
     @FXML
     private void initialize() {
-        // Initialisierung, wenn nötig
         initFahrzeugTableView();
+        initFahrzeugIdComboBox();
+
+        //Testdaten hinzufügen
+        createAndSaveTestFahrzeuge();
+    }
+
+    private void createAndSaveTestFahrzeuge() {
+        //Testdaten hinzufügen
+        Fahrzeug fahrzeug1 = new Fahrzeug("VW", "Golf", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(1));
+        Fahrzeug fahrzeug2 = new Fahrzeug("VW", "Polo", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(2));
+
+        //Testdaten speichern
+        fahrzeugService.save(fahrzeug1);
+        fahrzeugService.save(fahrzeug2);
+
+        //Testdaten in die Tabelle laden
+        initFahrzeugTableView();
+
+        //Testdaten in die Combobox laden
         initFahrzeugIdComboBox();
     }
 
-    private void initFahrzeugTableView() {
+    protected void initFahrzeugTableView() {
         // Hier kannst du die Logik für die Anzeige der Fahrzeuge implementieren
         fahrzeugIdColumn.setCellValueFactory(new PropertyValueFactory<>("fahrzeugId"));
         herstellerColumn.setCellValueFactory(new PropertyValueFactory<>("hersteller"));
@@ -129,7 +148,7 @@ public class FahrzeugController {
         fahrzeugTableView.setItems(fahrzeuge);
     }
 
-    private void initFahrzeugIdComboBox() {
+    protected void initFahrzeugIdComboBox() {
         ObservableList<Long> fahrzeugIds = FXCollections.observableArrayList(fahrzeugService.findAll().stream()
                 .map(Fahrzeug::getFahrzeugId)
                 .collect(Collectors.toList())
@@ -237,12 +256,6 @@ public class FahrzeugController {
         alert.showAndWait();
     }
 
-    private void clearFields() {
-//        herstellerField.clear();
-//        modellField.clear();
-//        kennzeichenField.clear();
-    }
-
     public IFahrzeugService<Fahrzeug> getFahrzeugService() {
         return fahrzeugService;
     }
@@ -251,4 +264,7 @@ public class FahrzeugController {
         return sharingStandortService;
     }
 
+    public void aktualisierenButtonClicked(ActionEvent actionEvent) {
+        initFahrzeugTableView();
+    }
 }

@@ -1,10 +1,14 @@
 package controller;
 
+import core.model.Fahrzeug;
 import core.model.Teilnehmer;
+import core.service.IFahrzeugService;
 import core.service.ITeilnehmerService;
 import core.service.TeilnehmerService;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,7 +123,31 @@ public class TeilnehmerController {
     @FXML
     private void loeschenButtonClicked() {
         // Implementiere die Logik zum Löschen eines Teilnehmers
-        showErrorAlert("Methode handleLoeschenButton muss implementiert werden");
+
+        try {
+
+            //TODO: Prüfen ob Teilnehmer noch in Ausleihe ist
+
+
+            //Fragen ob wirklich gelöscht werden soll
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Teilnehmer löschen");
+            alert.setHeaderText("Teilnehmer löschen");
+            alert.setContentText("Möchten Sie den Teilenhmer wirklich löschen?");
+            alert.showAndWait();
+
+            if (alert.getResult() != ButtonType.OK) {
+                return;
+            }
+
+
+            //Teilnehmer löschen
+            Teilnehmer teilnehmer = teilnehmerService.find(teilnehmerIdComboBox.getValue());
+            teilnehmerService.delete(teilnehmer.getTeilnehmerId());
+            showAlert("Teilnehmer erfolgreich gelöscht.");
+        } catch (Exception e) {
+            showAlert("Teilnehmer konnte nicht gelöscht werden.");
+        }
     }
 
     @FXML
@@ -154,10 +182,35 @@ public class TeilnehmerController {
         // Initialisierung, wenn nötig
         initTeilnehmerTableView();
         initTeilnehmerIdComboBox();
+
+        //Testdaten hinzufügen
+        createAndSaveTestdaten();
     }
 
-    private void initTeilnehmerTableView() {
-        // Hier kannst du die Logik für die Anzeige der Fahrzeuge implementieren
+    private void createAndSaveTestdaten() {
+        //Überprüfe, ob Testdaten schon vorhanden sind
+        if (teilnehmerService.findAll().isEmpty()) {
+            //Erstelle Testdaten
+            Teilnehmer teilnehmer1 = new Teilnehmer("Mustermann", "Max", "Musterstraße", "1", "12345", "Musterstadt", "DE123456789", "max.mustermann@muster.de", "0123456789");
+            Teilnehmer teilnehmer2 = new Teilnehmer("Musterfrau", "Maria", "Musterstraße", "2", "12345", "Musterstadt", "DE987654321", "maria.musterfrau@muster.de", "9876543210");
+
+            //Speichere Testdaten
+            teilnehmerService.save(teilnehmer1);
+            teilnehmerService.save(teilnehmer2);
+
+            //Aktualisiere TableView und ComboBox
+            initTeilnehmerTableView();
+            initTeilnehmerIdComboBox();
+
+            //Zeige Erfolgsmeldung
+            showAlert("Testdaten erfolgreich angelegt.");
+        }
+
+    }
+
+    protected void initTeilnehmerTableView() {
+        //TableView leeren
+        teilnehmerTableView.getItems().clear();
 
         // Erstelle eine leere Liste für die Teilnehmer
         ObservableList<Teilnehmer> teilnehmer = FXCollections.observableArrayList();
@@ -181,7 +234,7 @@ public class TeilnehmerController {
         telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefon"));
     }
 
-    private void initTeilnehmerIdComboBox() {
+    protected void initTeilnehmerIdComboBox() {
         ObservableList<Long> teilnehmerIds = FXCollections.observableArrayList(teilnehmerService.findAll().stream()
                 .map(Teilnehmer::getTeilnehmerId)
                 .collect(Collectors.toList())
@@ -189,13 +242,17 @@ public class TeilnehmerController {
         teilnehmerIdComboBox.setItems(teilnehmerIds);
     }
 
-    public void updateTeilnehmerTableView() {
-        // Lade die Teilnehmer erneut aus der Datenquelle
-        ObservableList<Teilnehmer> teilnehmer = FXCollections.observableArrayList();
-        teilnehmer.addAll(teilnehmerService.findAll());
-
-        // Füge die aktualisierten Teilnehmer der TableView hinzu
-        teilnehmerTableView.setItems(teilnehmer);
+    public ITeilnehmerService<Teilnehmer> getTeilnehmerService() {
+        return teilnehmerService;
     }
 
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public void aktualisierenButtonClicked(ActionEvent actionEvent) {
+        initialize();
+    }
 }

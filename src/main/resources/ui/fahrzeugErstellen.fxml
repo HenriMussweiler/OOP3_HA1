@@ -15,17 +15,27 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="herstellerField" layoutX="86.0" layoutY="100.0" promptText="Hersteller" />
-        <TextField fx:id="modellField" layoutX="86.0" layoutY="150.0" promptText="Modell" />
-        <TextField fx:id="ausstattungField" layoutX="86.0" layoutY="200.0" promptText="Ausstattungsvariante" />
-        <TextField fx:id="leistungField" layoutX="86.0" layoutY="250.0" promptText="Leistung in KW" />
-        <TextField fx:id="kilometerstandField" layoutX="86.0" layoutY="300.0" promptText="Kilometerstand" />
-        <ComboBox fx:id="kraftstoffField" layoutX="86.0" layoutY="350.0" promptText="Kraftstoffart" />
-        <TextField fx:id="baujahrField" layoutX="86.0" layoutY="400.0" promptText="Baujahr" />
-        <ComboBox fx:id="getriebeField" layoutX="86.0" layoutY="450.0" promptText="Art des Getriebes" />
-        <TextField fx:id="sitzplaetzeField" layoutX="86.0" layoutY="500.0" promptText="Sitzplätze" />
+        <TextField fx:id="herstellerField" layoutX="261.0" layoutY="98.0" promptText="Hersteller" />
+        <TextField fx:id="modellField" layoutX="261.0" layoutY="149.0" promptText="Modell" />
+        <TextField fx:id="ausstattungField" layoutX="261.0" layoutY="199.0" promptText="Ausstattungsvariante" />
+        <TextField fx:id="leistungField" layoutX="261.0" layoutY="250.0" promptText="Leistung in KW" />
+        <TextField fx:id="kilometerstandField" layoutX="261.0" layoutY="299.0" promptText="Kilometerstand" />
+        <ComboBox fx:id="kraftstoffField" layoutX="261.0" layoutY="348.0" promptText="Kraftstoffart" />
+        <TextField fx:id="baujahrField" layoutX="261.0" layoutY="401.0" promptText="Baujahr" />
+        <ComboBox fx:id="getriebeField" layoutX="261.0" layoutY="450.0" promptText="Art des Getriebes" />
+        <TextField fx:id="sitzplaetzeField" layoutX="261.0" layoutY="498.0" promptText="Sitzplätze" />
         <Button fx:id="speichernButton" layoutX="368.0" layoutY="598.0" onAction="#speichernButtonClicked" text="Speichern" />
-        <Button fx:id="zurueckButton" layoutX="86.0" layoutY="598.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
-        <ComboBox fx:id="sharingComboBox" layoutX="86.0" layoutY="551.0" prefHeight="26.0" prefWidth="160.0" />
+        <Button fx:id="zurueckButton" layoutX="78.0" layoutY="598.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+        <ComboBox fx:id="sharingComboBox" layoutX="261.0" layoutY="550.0" prefHeight="26.0" prefWidth="160.0" promptText="Standort" />
+      <Label layoutX="84.0" layoutY="103.0" text="Hersteller:" />
+      <Label layoutX="86.0" layoutY="154.0" text="Modell:" />
+      <Label layoutX="86.0" layoutY="204.0" text="Ausstattungsvariante:" />
+      <Label layoutX="84.0" layoutY="255.0" text="Leistung in KW:" />
+      <Label layoutX="84.0" layoutY="304.0" text="Kilometerstand:" />
+      <Label layoutX="84.0" layoutY="406.0" text="Baujahr:" />
+      <Label layoutX="84.0" layoutY="503.0" text="Sitzplätze:" />
+      <Label layoutX="84.0" layoutY="353.0" text="Kraftstoffart:" />
+      <Label layoutX="83.0" layoutY="455.0" text="Getriebeart:" />
+      <Label layoutX="84.0" layoutY="555.0" text="Standort:" />
     </children>
 </AnchorPane>

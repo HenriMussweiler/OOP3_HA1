@@ -146,6 +146,13 @@ public class FahrzeugErstellenController {
                 // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren
                 showAlert("Fahrzeug erfolgreich angelegt.");
 
+                //TableView aktualisieren
+                fahrzeugController.initFahrzeugTableView();
+
+                //ComboBox aktualisieren
+                fahrzeugController.initFahrzeugIdComboBox();
+
+                //Felder leeren
                 clearFields();
             } catch (Exception e) {
                 showAlert("Fahrzeug konnte nicht angelegt werden.");

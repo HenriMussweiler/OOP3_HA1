@@ -14,16 +14,25 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="nameField" layoutX="86.0" layoutY="100.0" promptText="Name" />
-        <TextField fx:id="vornameField" layoutX="86.0" layoutY="150.0" promptText="Vorname" />
-        <TextField fx:id="strasseField" layoutX="86.0" layoutY="200.0" promptText="Strasse" />
-        <TextField fx:id="hausnummerField" layoutX="86.0" layoutY="250.0" promptText="Hausnummer" />
-        <TextField fx:id="plzField" layoutX="86.0" layoutY="300.0" promptText="Postleitzahl" />
-        <TextField fx:id="ortField" layoutX="86.0" layoutY="350.0" promptText="Ort" />
-        <TextField fx:id="ibanField" layoutX="86.0" layoutY="400.0" promptText="IBAN" />
-        <TextField fx:id="mailField" layoutX="86.0" layoutY="450.0" promptText="Mail" />
-        <TextField fx:id="telefonField" layoutX="86.0" layoutY="500.0" promptText="Telefon" />
+        <TextField fx:id="nameField" layoutX="284.0" layoutY="100.0" promptText="Name" />
+        <TextField fx:id="vornameField" layoutX="284.0" layoutY="150.0" promptText="Vorname" />
+        <TextField fx:id="strasseField" layoutX="284.0" layoutY="200.0" promptText="Strasse" />
+        <TextField fx:id="hausnummerField" layoutX="284.0" layoutY="250.0" promptText="Hausnummer" />
+        <TextField fx:id="plzField" layoutX="284.0" layoutY="300.0" promptText="Postleitzahl" />
+        <TextField fx:id="ortField" layoutX="284.0" layoutY="350.0" promptText="Ort" />
+        <TextField fx:id="ibanField" layoutX="284.0" layoutY="400.0" promptText="IBAN" />
+        <TextField fx:id="mailField" layoutX="284.0" layoutY="450.0" promptText="Mail" />
+        <TextField fx:id="telefonField" layoutX="284.0" layoutY="500.0" promptText="Telefon" />
         <Button fx:id="speichernButton" layoutX="371.0" layoutY="551.0" onAction="#speichernButtonClicked" text="Speichern" />
         <Button fx:id="zurueckButton" layoutX="86.0" layoutY="551.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+      <Label layoutX="104.0" layoutY="105.0" text="Name:" />
+      <Label layoutX="104.0" layoutY="154.0" text="Vorname:" />
+      <Label layoutX="103.0" layoutY="205.0" text="Straße:" />
+      <Label layoutX="104.0" layoutY="255.0" text="Hausnummer:" />
+      <Label layoutX="105.0" layoutY="308.0" text="Postleitzahl:" />
+      <Label layoutX="105.0" layoutY="356.0" text="Ort:" />
+      <Label layoutX="104.0" layoutY="406.0" text="IBAN:" />
+      <Label layoutX="107.0" layoutY="455.0" text="Mail:" />
+      <Label layoutX="104.0" layoutY="505.0" text="Telefon:" />
     </children>
 </AnchorPane>

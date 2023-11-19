@@ -82,8 +82,11 @@ public class TeilnehmerAendernController {
             selectedTeilnehmer.setMail(mailField.getText());
             selectedTeilnehmer.setTelefon(telefonField.getText());
 
+            // Aktualisiere den Teilnehmer in der Datenbank
+            teilnehmerController.getTeilnehmerService().update(selectedTeilnehmer);
+
             // Aktualisiere die TableView im TeilnehmerController
-            teilnehmerController.updateTeilnehmerTableView();
+            teilnehmerController.initTeilnehmerTableView();
 
             // Schließe das Fenster
             closeWindow();
