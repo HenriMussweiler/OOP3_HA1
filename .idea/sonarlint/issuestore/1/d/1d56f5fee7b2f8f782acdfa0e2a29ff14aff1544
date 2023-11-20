@@ -1,13 +1,16 @@
 
 Q
-java:S3740W"/Provide the parametrized type for this generic.(‹ß¿œùÿÿÿÿ8”ÏÀÎ¾1
+java:S3740V"/Provide the parametrized type for this generic.(‹ß¿œùÿÿÿÿ8ºÆêĞ¾1
 M
-java:S3740‡"/Provide the parametrized type for this generic.(—êÅğ8”ÏÀÎ¾1
+java:S3740"/Provide the parametrized type for this generic.(—êÅğ8»ÆêĞ¾1
+s	java:S117Õ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÁÈôøÿÿÿÿ8»ÆêĞ¾1
+~
+java:S1104\"aMake ausleihvorgangService a static final constant or non-public and provide accessors if needed.(ûôÚÙ8¼ÆêĞ¾1
+_
+java:S4973Ö"<Strings and Boxed types should be compared using "equals()".(´ôªøÿÿÿÿ8¿ÆêĞ¾1
 q
-java:S1602„"SRemove useless curly braces around statement and then remove useless return keyword(ı—¾£8§ÏÀÎ¾1
+java:S1602…"SRemove useless curly braces around statement and then remove useless return keyword(ı—¾£8ÒÆêĞ¾1
 u
-java:S6204š"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8¨ÏÀÎ¾1
-U
-java:S1135Ò"2Complete the task associated to this TODO comment.(ËùÌóùÿÿÿÿ8¯ÏÀÎ¾1
+java:S6204›"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ªçŸŠøÿÿÿÿ8ÓÆêĞ¾1
 P
-java:S1172‹"2Remove this unused method parameter "actionEvent".(”è¿â8°ÏÀÎ¾1
+java:S1172“"2Remove this unused method parameter "actionEvent".(”è¿â8ÜÆêĞ¾1

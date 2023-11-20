@@ -1,9 +1,8 @@
 package controller;
 
+import core.model.Ausleihvorgang;
 import core.model.SharingStandort;
-import core.service.FahrzeugService;
-import core.service.ISharingStandortService;
-import core.service.SharingStandortService;
+import core.service.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,12 +12,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import core.model.Fahrzeug;
-import core.service.IFahrzeugService;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.stream.Collectors;
 import javafx.scene.control.Alert;
 
@@ -89,6 +88,8 @@ public class FahrzeugController {
     public static FahrzeugController getInstance() {
         return new FahrzeugController();
     }
+
+    public AusleihvorgangService ausleihvorgangService = new AusleihvorgangService();
 
     @FXML
     private void initialize() {
@@ -207,7 +208,14 @@ public class FahrzeugController {
         // Hier kannst du die Logik für das Löschen eines Fahrzeugs implementieren
         try {
 
-            //TODO: Prüfen ob Fahrzeug noch in Ausleihe ist
+            //Prüfen ob Fahrzeug noch in Ausleihe ist
+            Fahrzeug fahrzeug1 = fahrzeugService.find(fahrzeugIdComboBox.getValue());
+            Collection<Ausleihvorgang> ausleihvorgänge = ausleihvorgangService.findAll();
+            if (ausleihvorgänge.stream().anyMatch(ausleihvorgang -> ausleihvorgang.getFahrzeug().getFahrzeugId() == fahrzeug1.getFahrzeugId())) {
+                showAlert("Fahrzeug kann nicht gelöscht werden, da es noch in Ausleihe ist.");
+                return;
+            }
+
 
 
             //Fragen ob wirklich gelöscht werden soll
