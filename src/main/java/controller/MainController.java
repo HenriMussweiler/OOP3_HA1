@@ -1,5 +1,10 @@
 package controller;
 
+import core.model.SharingStandort;
+import controller.SharingStandortController;
+import controller.TeilnehmerController;
+import controller.FahrzeugController;
+import controller.AusleihvorgangController;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -68,5 +73,20 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    //Testdaten holen
+    public void createTestData() {
+        SharingStandortController sharingStandortController = new SharingStandortController();
+        sharingStandortController.createTestData();
+
+        TeilnehmerController teilnehmerController = new TeilnehmerController();
+        teilnehmerController.createAndSaveTestdaten();
+
+        FahrzeugController fahrzeugController = new FahrzeugController();
+        fahrzeugController.createAndSaveTestFahrzeuge();
+
+        AusleihvorgangController ausleihvorgangController = new AusleihvorgangController();
+        ausleihvorgangController.createTestData();
     }
 }

@@ -26,6 +26,9 @@ public class Ausleihvorgang {
     @Column(name = "enddatum")
     private LocalDateTime enddatum;
 
+    @Column(name = "abgeschlossen")
+    private boolean abgeschlossen;
+
     @Column(name = "gefahrene_kilometer")
     private int gefahreneKilometer;
 
@@ -35,11 +38,12 @@ public class Ausleihvorgang {
 
     // Konstruktor, Getter und Setter hier...
 
-    public Ausleihvorgang(Fahrzeug fahrzeug, Teilnehmer teilnehmer, LocalDateTime startdatum, LocalDateTime enddatum, int gefahreneKilometer, Rechnung rechnung) {
+    public Ausleihvorgang(Fahrzeug fahrzeug, Teilnehmer teilnehmer, LocalDateTime startdatum, LocalDateTime enddatum, boolean abgeschlossen, int gefahreneKilometer, Rechnung rechnung) {
         this.fahrzeug = fahrzeug;
         this.teilnehmer = teilnehmer;
         this.startdatum = startdatum;
         this.enddatum = enddatum;
+        this.abgeschlossen = false;
         this.gefahreneKilometer = gefahreneKilometer;
         this.rechnung = rechnung;
     }
@@ -92,6 +96,14 @@ public class Ausleihvorgang {
 
     public void setEnddatum(LocalDateTime endzeitpunkt) {
         this.enddatum = endzeitpunkt;
+    }
+
+    public boolean getAbgeschlossen() {
+        return abgeschlossen;
+    }
+
+    public void setAbgeschlossen(boolean abgeschlossen) {
+        this.abgeschlossen = abgeschlossen;
     }
 
     public int getGefahreneKilometer() {

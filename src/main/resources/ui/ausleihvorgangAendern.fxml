@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ComboBox?>
-<AnchorPane prefHeight="400.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AusleihvorgangAendernController">
+<AnchorPane prefHeight="440.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AusleihvorgangAendernController">
     <children>
         <Label layoutX="142.0" layoutY="34.0" text="Ausleihvorgang Ändern">
             <font>
@@ -16,14 +16,16 @@
             </font>
         </Label>
         <Label layoutX="45.0" layoutY="90.0" text="Teilnehmer: " />
-        <ComboBox fx:id="teilnehmerComboBox" layoutX="160.0" layoutY="85.0" promptText="Teilnehmer" />
+        <ComboBox fx:id="teilnehmerComboBox" layoutX="180.0" layoutY="85.0" promptText="Teilnehmer" />
         <Label layoutX="45.0" layoutY="140.0" text="Fahrzeug: " />
-        <ComboBox fx:id="fahrzeugComboBox" layoutX="160.0" layoutY="135.0" promptText="Fahrzeug" />
+        <ComboBox fx:id="fahrzeugComboBox" layoutX="180.0" layoutY="135.0" promptText="Fahrzeug" />
         <Label layoutX="45.0" layoutY="190.0" text="Startdatum: " />
-        <DatePicker fx:id="startdatumPicker" layoutX="160.0" layoutY="185.0" promptText="Startdatum" />
+        <DatePicker fx:id="startdatumPicker" layoutX="180.0" layoutY="185.0" promptText="Startdatum" />
         <Label layoutX="45.0" layoutY="240.0" text="Enddatum: " />
-        <DatePicker fx:id="enddatumPicker" layoutX="160.0" layoutY="235.0" promptText="Enddatum" />
-        <Button fx:id="speichernButton" layoutX="240.0" layoutY="300.0" mnemonicParsing="false" onAction="#speichernButtonClicked" text="Speichern" />
-        <Button fx:id="zurueckButton" layoutX="140.0" layoutY="300.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+        <DatePicker fx:id="enddatumPicker" layoutX="180.0" layoutY="235.0" promptText="Enddatum" />
+        <Button fx:id="speichernButton" layoutX="246.0" layoutY="360.0" mnemonicParsing="false" onAction="#speichernButtonClicked" text="Abschließen" />
+        <Button fx:id="zurueckButton" layoutX="142.0" layoutY="360.0" mnemonicParsing="false" onAction="#zurueckButtonClicked" text="Zurück" />
+      <Label layoutX="45.0" layoutY="290.0" text="Gefahrene Kilometer:" />
+      <TextField fx:id="gefahreneKilometerTextField" layoutX="180.0" layoutY="285.0" promptText="Gefahrene Kilometer" />
     </children>
 </AnchorPane>

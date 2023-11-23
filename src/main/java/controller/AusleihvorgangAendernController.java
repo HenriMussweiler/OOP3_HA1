@@ -16,6 +16,7 @@ import javafx.util.StringConverter;
 
 public class AusleihvorgangAendernController {
 
+    public TextField gefahreneKilometerTextField;
     @FXML
     private ComboBox<Teilnehmer> teilnehmerComboBox;
 
@@ -48,6 +49,26 @@ public class AusleihvorgangAendernController {
 
     @FXML
     private void speichernButtonClicked(ActionEvent event) {
+        //Prüfen ob alle Felder ausgefüllt sind
+        if (teilnehmerComboBox.getValue() == null || fahrzeugComboBox.getValue() == null || startdatumPicker.getValue() == null || enddatumPicker.getValue() == null || gefahreneKilometerTextField.getText().isEmpty()) {
+            showAlert("Bitte füllen Sie alle Felder aus.");
+            return;
+        }
+
+        //Prüfen ob Startdatum vor Enddatum liegt
+        if (startdatumPicker.getValue().isAfter(enddatumPicker.getValue())) {
+            showAlert("Das Startdatum muss vor dem Enddatum liegen.");
+            return;
+        }
+
+        //Prüfen ob Gefahrene Kilometer eine Zahl ist
+        try {
+            Integer.parseInt(gefahreneKilometerTextField.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Gefahrene Kilometer muss eine Zahl sein.");
+            return;
+        }
+
         //Zugriff auf ausgewählten Teilnehmer und Fahrzeug
         Teilnehmer teilnehmer = teilnehmerComboBox.getValue();
         Fahrzeug fahrzeug = fahrzeugComboBox.getValue();
@@ -58,14 +79,40 @@ public class AusleihvorgangAendernController {
             selectedAusleihvorgang.setFahrzeug(fahrzeug);
             selectedAusleihvorgang.setStartdatum(startdatumPicker.getValue().atStartOfDay());
             selectedAusleihvorgang.setEnddatum(enddatumPicker.getValue().atStartOfDay());
+            selectedAusleihvorgang.setGefahreneKilometer(Integer.parseInt(gefahreneKilometerTextField.getText()));
 
             // Speichern des geänderten Ausleihvorgangs
             selectedAusleihvorgang = ausleihvorgangService.update(selectedAusleihvorgang);
+
+            //Lade Daten des Fahrzeugs
+            Fahrzeug fahrzeug1 = fahrzeugService.find(fahrzeug.getFahrzeugId());
+
+
+
+            try {
+                fahrzeug1.setKilometerstand(fahrzeug1.getKilometerstand() + Integer.parseInt(gefahreneKilometerTextField.getText()));
+            } catch (NumberFormatException e) {
+                showAlert("Gefahrene Kilometer muss eine Zahl sein.");
+                return;
+            }
+
+            // Gefahrene Kilometer des Fahrzeugs aktualisieren
+            fahrzeugService.update(fahrzeug1);
+
+            //Ausleihvorgang auf abgeschlossen setzen
+            selectedAusleihvorgang.setAbgeschlossen(true);
+            ausleihvorgangService.update(selectedAusleihvorgang);
+
+            //Ausleihvorgang aus der TableView entfernen
+
+
             // Schließen des Fensters
             Stage stage = (Stage) speichernButton.getScene().getWindow();
             stage.close();
             // Anzeigen einer Information
             showAlert("Ausleihvorgang wurde geändert.");
+
+            ausleihvorgangController.initialize();
         } else {
             showAlert("Ausleihvorgang konnte nicht geändert werden.");
         }
@@ -98,6 +145,9 @@ public class AusleihvorgangAendernController {
             // ComboBoxen mit Daten füllen
             teilnehmerComboBox.setItems(teilnehmerList);
             fahrzeugComboBox.setItems(fahrzeugList);
+
+            //TextField mit Daten füllen
+            gefahreneKilometerTextField.setText(String.valueOf(selectedAusleihvorgang.getGefahreneKilometer()));
 
             // Zellenfabrik für die Anzeige konfigurieren
             teilnehmerComboBox.setCellFactory(param -> new ListCell<Teilnehmer>() {

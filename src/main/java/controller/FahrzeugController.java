@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import javafx.scene.control.Alert;
 
@@ -97,10 +98,10 @@ public class FahrzeugController {
         initFahrzeugIdComboBox();
 
         //Testdaten hinzufügen
-        createAndSaveTestFahrzeuge();
+        //createAndSaveTestFahrzeuge();
     }
 
-    private void createAndSaveTestFahrzeuge() {
+    public void createAndSaveTestFahrzeuge() {
         //Testdaten hinzufügen
         Fahrzeug fahrzeug1 = new Fahrzeug("VW", "Golf", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(1));
         Fahrzeug fahrzeug2 = new Fahrzeug("VW", "Polo", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(2));
@@ -108,12 +109,6 @@ public class FahrzeugController {
         //Testdaten speichern
         fahrzeugService.save(fahrzeug1);
         fahrzeugService.save(fahrzeug2);
-
-        //Testdaten in die Tabelle laden
-        initFahrzeugTableView();
-
-        //Testdaten in die Combobox laden
-        initFahrzeugIdComboBox();
     }
 
     protected void initFahrzeugTableView() {
@@ -181,6 +176,13 @@ public class FahrzeugController {
 
     @FXML
     private void aendernButtonClicked() {
+        // Prüfen ob Fahrzeug ausgewählt wurde
+        if (fahrzeugIdComboBox.getValue() == null) {
+            showAlert("Bitte wählen Sie ein Fahrzeug aus.");
+            return;
+        }
+
+        // Fahrzeug aus der Datenquelle laden
         Fahrzeug fahrzeug = fahrzeugService.find(fahrzeugIdComboBox.getValue());
 
         try {
@@ -205,13 +207,12 @@ public class FahrzeugController {
 
     @FXML
     private void loeschenButtonClicked() {
-        // Hier kannst du die Logik für das Löschen eines Fahrzeugs implementieren
         try {
+            //Fahrzeug aus der Datenquelle laden
+            Fahrzeug fahrzeug = fahrzeugService.find(fahrzeugIdComboBox.getValue());
 
-            //Prüfen ob Fahrzeug noch in Ausleihe ist
-            Fahrzeug fahrzeug1 = fahrzeugService.find(fahrzeugIdComboBox.getValue());
-            Collection<Ausleihvorgang> ausleihvorgänge = ausleihvorgangService.findAll();
-            if (ausleihvorgänge.stream().anyMatch(ausleihvorgang -> ausleihvorgang.getFahrzeug().getFahrzeugId() == fahrzeug1.getFahrzeugId())) {
+            //Prüfen ob Fahrzeug noch in aktiven Ausleihen involviert ist
+            if (isFahrzeugInAktivenAusleihen(fahrzeug)) {
                 showAlert("Fahrzeug kann nicht gelöscht werden, da es noch in Ausleihe ist.");
                 return;
             }
@@ -231,12 +232,26 @@ public class FahrzeugController {
 
 
             //Fahrzeug löschen
-            Fahrzeug fahrzeug = fahrzeugService.find(fahrzeugIdComboBox.getValue());
             fahrzeugService.delete(fahrzeug.getFahrzeugId());
             showAlert("Fahrzeug erfolgreich gelöscht.");
         } catch (Exception e) {
             showAlert("Fahrzeug konnte nicht gelöscht werden.");
         }
+    }
+
+    private boolean isFahrzeugInAktivenAusleihen(Fahrzeug fahrzeug) {
+        List<Ausleihvorgang> ausleihvorgaenge = ausleihvorgangService.findAll();
+        for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
+            if (ausleihvorgang.getFahrzeug().getFahrzeugId() == fahrzeug.getFahrzeugId()) {
+                //Prüfen ob das Enddatum des Ausleihvorgangs vor dem aktuellen Datum liegt
+                if (ausleihvorgang.getEnddatum().isAfter(java.time.LocalDateTime.now())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     @FXML

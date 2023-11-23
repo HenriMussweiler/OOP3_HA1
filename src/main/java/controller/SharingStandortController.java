@@ -27,6 +27,10 @@ public class SharingStandortController {
 
     @FXML
     private void initialize() {
+        //createTestData();
+    }
+
+    public void createTestData() {
         //Testdaten hinzufügen
         SharingStandort sharingStandort1 = new SharingStandort("Osnabrück");
         SharingStandort sharingStandort2 = new SharingStandort("Münster");

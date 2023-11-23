@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.RechnungController">
-
-    <Label text="Teilnehmer:" />
-    <ComboBox fx:id="teilnehmerComboBox" />
-
-    <Label text="Zeitraum von:" />
-    <DatePicker fx:id="startdatumPicker" />
-
-    <Label text="bis:" />
-    <DatePicker fx:id="enddatumPicker" />
-
-    <Button text="Generiere Rechnung" onAction="#handleGeneriereRechnungButton" />
-
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RechnungController">
+   <children>
+      <Label layoutX="54.0" layoutY="103.0" text="Teilnehmer:" />
+      <ComboBox fx:id="teilnehmerComboBox" layoutX="54.0" layoutY="135.0" />
+      <DatePicker fx:id="startdatumPicker" layoutX="54.0" layoutY="210.0" />
+      <Label layoutX="54.0" layoutY="179.0" text="Zeitraum von:" />
+      <Label layoutX="54.0" layoutY="248.0" text="bis:" />
+      <DatePicker fx:id="enddatumPicker" layoutX="54.0" layoutY="276.0" />
+      <Button fx:id="generiereRechnungButton" layoutX="118.0" layoutY="316.0" onAction="#generiereRechnungButtonClicked" text="Generiere Rechnung" />
+      <Label layoutX="54.0" layoutY="45.0" text="Rechnung:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="zurueckButton" layoutX="51.0" layoutY="316.0" onAction="#zurueckButtonClicked" text="Zurück" />
+   </children>
+</AnchorPane>

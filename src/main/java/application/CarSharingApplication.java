@@ -2,6 +2,7 @@ package application;
 
 import controller.MainController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,16 +16,20 @@ public class CarSharingApplication extends Application {
         Parent root = loader.load();
 
         MainController mainController = loader.getController();
-        mainController.setPrimaryStage(primaryStage); // Wichtig: Setze die primaryStage
+        mainController.setPrimaryStage(primaryStage); // Setze die primaryStage in den MainController
 
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Car Sharing Application");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        //Testdaten hinzufügen
+        Platform.runLater(() -> mainController.createTestData());
     }
 
     public static void main(String[] args) {
+        //Starte die Anwendung
         launch(args);
     }
 }

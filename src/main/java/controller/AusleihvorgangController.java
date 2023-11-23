@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 public class AusleihvorgangController {
 
     @FXML
-    private TableView<Ausleihvorgang> ausleihvorgangTableView;
+    protected TableView<Ausleihvorgang> ausleihvorgangTableView;
     @FXML
     public TableColumn<Ausleihvorgang, Long> ausleihvorgangIdColumn;
 
@@ -75,16 +76,34 @@ public class AusleihvorgangController {
 
     private FahrzeugService fahrzeugService = new FahrzeugService();
     private TeilnehmerService teilnehmerService = new TeilnehmerService();
-    private AusleihvorgangService ausleihvorgangService = new AusleihvorgangService();
+    private AusleihvorgangService ausleihvorgangService;
 
     @FXML
-    private void initialize() {
+    protected void initialize() {
+        //Testdaten erstellen
+        //createTestData();
+
         //TableView anzeigen
+        ausleihvorgangService = new AusleihvorgangService();
         initTableView();
 
         //ComboBoxen befüllen
         initComboBoxes();
 
+    }
+
+    public void createTestData() {
+        ausleihvorgangService = new AusleihvorgangService();
+
+        //Testdaten erstellen
+        Ausleihvorgang ausleihvorgang1 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(4), LocalDateTime.parse("2023-11-02T00:00:00"), LocalDateTime.parse("2023-11-06T00:00:00"), false, 0, null);
+        Ausleihvorgang ausleihvorgang2 = new Ausleihvorgang(fahrzeugService.find(7), teilnehmerService.find(4), LocalDateTime.parse("2023-11-07T00:00:00"), LocalDateTime.parse("2023-11-13T00:00:00"), false, 0, null);
+        Ausleihvorgang ausleihvorgang3 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(5), LocalDateTime.parse("2023-11-01T00:00:00"), LocalDateTime.parse("2023-11-02T00:00:00"), false, 0, null);
+
+        //Testdaten in der Datenbank speichern
+        ausleihvorgangService.save(ausleihvorgang1);
+        ausleihvorgangService.save(ausleihvorgang2);
+        ausleihvorgangService.save(ausleihvorgang3);
     }
 
     private void initComboBoxes() {
@@ -98,6 +117,10 @@ public class AusleihvorgangController {
                 .map(Ausleihvorgang::getAusleihvorgangId)
                 .toList()
         );
+
+        //Ausleihvorgänge filtern, die bereits abgeschlossen sind
+        ausleihvorgang.removeIf(ausleihvorgang1 -> ausleihvorgangService.find(ausleihvorgang1).getAbgeschlossen());
+
         stornierenComboBox.setItems(ausleihvorgang);
     }
 
@@ -118,7 +141,7 @@ public class AusleihvorgangController {
         fahrzeugComboBox.setItems(fahrzeug);
     }
 
-    private void initTableView() {
+    protected void initTableView() {
         ausleihvorgangIdColumn.setCellValueFactory(new PropertyValueFactory<>("ausleihvorgangId"));
 
         teilnehmerColumn.setCellValueFactory(cellData -> {
@@ -134,7 +157,16 @@ public class AusleihvorgangController {
         startdatumColumn.setCellValueFactory(new PropertyValueFactory<>("startdatum"));
         enddatumColumn.setCellValueFactory(new PropertyValueFactory<>("enddatum"));
 
+        //Tabelle leeren
+        ausleihvorgangTableView.getItems().clear();
+
+        //TableView mit Daten befüllen
         ObservableList<Ausleihvorgang> ausleihvorgang = FXCollections.observableArrayList(ausleihvorgangService.findAll());
+
+        //Prüfen welche Ausleihvorgänge abgeschlossen sind und diese aus der Liste entfernen
+        //Wenn abgeschlossen = true, dann wird das Objekt aus der Liste entfernt
+        ausleihvorgang.removeIf(Ausleihvorgang::getAbgeschlossen);
+
         ausleihvorgangTableView.setItems(ausleihvorgang);
     }
 
@@ -178,11 +210,7 @@ public class AusleihvorgangController {
     @FXML
     private void aktualisierenButtonClicked(ActionEvent actionEvent) {
         //TabkleView aktualisieren
-        ausleihvorgangTableView.getItems().clear();
-        ausleihvorgangTableView.getItems().addAll(ausleihvorgangService.findAll());
-
-        //ComboBox aktualisieren
-        initComboBoxes();
+        initialize();
     }
 
     @FXML
@@ -194,6 +222,20 @@ public class AusleihvorgangController {
 
         if (teilnehmer == null || fahrzeug == null || startdatum == null || enddatum == null) {
             showErrorAlert("Bitte füllen Sie alle Felder aus.");
+            return;
+        }
+
+        //Prüfen ob das Fahrzeug bereits ausgeliehen ist
+        if (ausleihvorgangService.findAll().stream()
+                .filter(ausleihvorgang -> ausleihvorgang.getFahrzeug().getModell().equals(fahrzeug))
+                .anyMatch(ausleihvorgang -> ausleihvorgang.getEnddatum().isAfter(startdatumPicker.getValue().atStartOfDay()) && ausleihvorgang.getStartdatum().isBefore(enddatumPicker.getValue().atStartOfDay()))) {
+            showErrorAlert("Das Fahrzeug ist in diesem Zeitraum bereits ausgeliehen.");
+            return;
+        }
+
+        //Prüfen ob Startdatum vor dem Enddatum liegt
+        if (startdatumPicker.getValue().isAfter(enddatumPicker.getValue())) {
+            showErrorAlert("Das Startdatum muss vor dem Enddatum liegen.");
             return;
         }
 
@@ -267,6 +309,12 @@ public class AusleihvorgangController {
     }
 
     public void aendernButtonClicked(ActionEvent actionEvent) {
+        // Prüfen ob ein Ausleihvorgang ausgewählt wurde
+        if (stornierenComboBox.getValue() == null) {
+            showErrorAlert("Bitte wählen Sie einen Ausleihvorgang aus.");
+            return;
+        }
+
         // Hole den ausgewählten Ausleihvorgang aus der ComboBox
         Long ausleihvorgangId = stornierenComboBox.getValue();
         if (ausleihvorgangId == null) {
@@ -294,7 +342,7 @@ public class AusleihvorgangController {
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.showAndWait();
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,7 +1,9 @@
 package controller;
 
+import core.model.Ausleihvorgang;
 import core.model.Fahrzeug;
 import core.model.Teilnehmer;
+import core.service.AusleihvorgangService;
 import core.service.IFahrzeugService;
 import core.service.ITeilnehmerService;
 import core.service.TeilnehmerService;
@@ -19,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class TeilnehmerController {
@@ -68,7 +71,9 @@ public class TeilnehmerController {
     @FXML
     private Button aendernButton;
 
-    private ITeilnehmerService<Teilnehmer> teilnehmerService = new TeilnehmerService();
+    private ITeilnehmerService<Teilnehmer> teilnehmerService;
+
+    private AusleihvorgangService ausleihvorangService = new AusleihvorgangService();
 
     @FXML
     private void hinzufuegenButtonClicked() {
@@ -94,10 +99,16 @@ public class TeilnehmerController {
 
     @FXML
     private void aendernButtonClicked() {
-        // Implementiere die Logik zum Ändern eines Teilnehmers
+        //Prüfen ob Teilnehmer ausgewählt wurde
+        if (teilnehmerIdComboBox.getValue() == null) {
+            showErrorAlert("Bitte wählen Sie einen Teilnehmer aus.");
+            return;
+        }
 
         // Lade den ausgewählten Teilnehmer aus der Datenquelle
+        teilnehmerService = new TeilnehmerService();
         Teilnehmer teilnehmer = teilnehmerService.find(teilnehmerIdComboBox.getValue());
+
 
         // Öffne das Fenster zum Ändern des Teilnehmers
         try {
@@ -122,11 +133,17 @@ public class TeilnehmerController {
 
     @FXML
     private void loeschenButtonClicked() {
-        // Implementiere die Logik zum Löschen eines Teilnehmers
-
+        teilnehmerService = new TeilnehmerService();
         try {
+           //Teilnehmer aus der Datenquelle laden
+           Teilnehmer teilnehmer = teilnehmerService.find(teilnehmerIdComboBox.getValue());
 
-            //TODO: Prüfen ob Teilnehmer noch in Ausleihe ist
+           //Prüfen ob Teilnehmer noch in aktive Ausleihen involviert ist
+           if (isTeilnehmerInAktivenAusleihen(teilnehmer)) {
+               showErrorAlert("Der Teilnehmer ist noch in aktiven Ausleihen involviert und kann daher nicht gelöscht werden.");
+               return;
+           }
+
 
 
             //Fragen ob wirklich gelöscht werden soll
@@ -142,12 +159,27 @@ public class TeilnehmerController {
 
 
             //Teilnehmer löschen
-            Teilnehmer teilnehmer = teilnehmerService.find(teilnehmerIdComboBox.getValue());
             teilnehmerService.delete(teilnehmer.getTeilnehmerId());
             showAlert("Teilnehmer erfolgreich gelöscht.");
         } catch (Exception e) {
             showAlert("Teilnehmer konnte nicht gelöscht werden.");
         }
+    }
+
+    private boolean isTeilnehmerInAktivenAusleihen(Teilnehmer teilnehmer) {
+        //Prüfe ob Teilnehmer in aktiven Ausleihen involviert ist
+        List<Ausleihvorgang> ausleihvorgaenge = ausleihvorangService.findAll();
+        for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
+            if (ausleihvorgang.getTeilnehmer().getTeilnehmerId() == teilnehmer.getTeilnehmerId()) {
+                //Prüfen ob das Enddatum des Ausleihvorgangs vor dem aktuellen Datum liegt
+                if (ausleihvorgang.getEnddatum().isAfter(java.time.LocalDateTime.now())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
     @FXML
@@ -184,12 +216,11 @@ public class TeilnehmerController {
         initTeilnehmerIdComboBox();
 
         //Testdaten hinzufügen
-        createAndSaveTestdaten();
+        //createAndSaveTestdaten();
     }
 
-    private void createAndSaveTestdaten() {
-        //Überprüfe, ob Testdaten schon vorhanden sind
-        if (teilnehmerService.findAll().isEmpty()) {
+    public void createAndSaveTestdaten() {
+        teilnehmerService = new TeilnehmerService();
             //Erstelle Testdaten
             Teilnehmer teilnehmer1 = new Teilnehmer("Mustermann", "Max", "Musterstraße", "1", "12345", "Musterstadt", "DE123456789", "max.mustermann@muster.de", "0123456789");
             Teilnehmer teilnehmer2 = new Teilnehmer("Musterfrau", "Maria", "Musterstraße", "2", "12345", "Musterstadt", "DE987654321", "maria.musterfrau@muster.de", "9876543210");
@@ -197,18 +228,10 @@ public class TeilnehmerController {
             //Speichere Testdaten
             teilnehmerService.save(teilnehmer1);
             teilnehmerService.save(teilnehmer2);
-
-            //Aktualisiere TableView und ComboBox
-            initTeilnehmerTableView();
-            initTeilnehmerIdComboBox();
-
-            //Zeige Erfolgsmeldung
-            showAlert("Testdaten erfolgreich angelegt.");
-        }
-
     }
 
     protected void initTeilnehmerTableView() {
+        teilnehmerService = new TeilnehmerService();
         //TableView leeren
         teilnehmerTableView.getItems().clear();
 
