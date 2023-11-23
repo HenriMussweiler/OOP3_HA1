@@ -112,8 +112,15 @@ public class RechnungController {
         for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
             rechnung.addAusleihvorgang(ausleihvorgang);
         }
+        if (ausleihvorgaenge.isEmpty()) {
+            showErrorAlert("Keine Ausleihvorgänge gefunden.");
+            return;
+        }
 
         rechnungService.save(rechnung);
+        for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
+            ausleihvorgangService.save(ausleihvorgang);
+        }
         showAlert("Rechnung generiert:\n" + invoiceText);
     }
 
