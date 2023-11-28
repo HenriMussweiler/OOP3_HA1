@@ -3,13 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import jfxtras.scene.control.LocalDateTimeTextField?>
 
-<AnchorPane prefHeight="422.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AusleihvorgangController">
+<AnchorPane prefHeight="442.0" prefWidth="833.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AusleihvorgangController">
 
     <children>
         <Label layoutX="10" layoutY="10" text="Teilnehmer:" />
@@ -19,16 +19,14 @@
         <ComboBox fx:id="fahrzeugComboBox" layoutX="10" layoutY="110" />
 
         <Label layoutX="10" layoutY="150" text="Startdatum:" />
-        <DatePicker fx:id="startdatumPicker" layoutX="10" layoutY="180" />
 
-        <Label layoutX="10" layoutY="220" text="Enddatum:" />
-        <DatePicker fx:id="enddatumPicker" layoutX="10" layoutY="250" />
+        <Label layoutX="8.0" layoutY="213.0" text="Enddatum:" />
 
-        <Button fx:id="reservierenButton" layoutX="12.0" layoutY="344.0" onAction="#reservierenButtonClicked" text="Reservieren" />
-        <Button fx:id="zurueckButton" layoutX="12.0" layoutY="376.0" onAction="#zurueckButtonClicked" text="Zurück" />
-        <Button fx:id="aktualisierenButton" layoutX="512.0" layoutY="343.0" onAction="#aktualisierenButtonClicked" text="Aktualisieren" />
+        <Button fx:id="reservierenButton" layoutX="74.0" layoutY="283.0" onAction="#reservierenButtonClicked" text="Reservieren" />
+        <Button fx:id="zurueckButton" layoutX="9.0" layoutY="283.0" onAction="#zurueckButtonClicked" text="Zurück" />
+        <Button fx:id="aktualisierenButton" layoutX="716.0" layoutY="343.0" onAction="#aktualisierenButtonClicked" text="Aktualisieren" />
 
-        <TableView fx:id="ausleihvorgangTableView" layoutX="200" layoutY="10" prefHeight="300" prefWidth="400">
+        <TableView fx:id="ausleihvorgangTableView" layoutX="313.0" layoutY="9.0" prefHeight="300" prefWidth="491.0">
             <columns>
                 <TableColumn fx:id="ausleihvorgangIdColumn" text="AusleihvorgangID" />
                 <TableColumn fx:id="teilnehmerColumn" text="Teilnehmer" />
@@ -37,10 +35,12 @@
                 <TableColumn fx:id="enddatumColumn" text="Enddatum" />
             </columns>
         </TableView>
-      <Button fx:id="stornierenButton" layoutX="301.0" layoutY="376.0" onAction="#stornierenButtonClicked" text="Stornieren" />
-      <ComboBox fx:id="stornierenComboBox" layoutX="200.0" layoutY="343.0" prefHeight="26.0" prefWidth="175.0" />
-      <Label layoutX="200.0" layoutY="317.0" text="Zum Stornieren bitte die AusleihvorgangID auswählen:" />
-      <Button fx:id="aendernButton" layoutX="200.0" layoutY="376.0" onAction="#aendernButtonClicked" text="Abschließen" />
+      <Button fx:id="stornierenButton" layoutX="414.0" layoutY="376.0" onAction="#stornierenButtonClicked" text="Stornieren" />
+      <ComboBox fx:id="stornierenComboBox" layoutX="313.0" layoutY="343.0" prefHeight="26.0" prefWidth="175.0" />
+      <Label layoutX="313.0" layoutY="316.0" text="Zum Stornieren bitte die AusleihvorgangID auswählen:" />
+      <Button fx:id="aendernButton" layoutX="313.0" layoutY="376.0" onAction="#aendernButtonClicked" text="Abschließen" />
+      <LocalDateTimeTextField fx:id="startdatumPicker" layoutX="10.0" layoutY="173.0" />
+      <LocalDateTimeTextField fx:id="enddatumPicker" layoutX="10.0" layoutY="241.0" />
     </children>
 
     <padding>

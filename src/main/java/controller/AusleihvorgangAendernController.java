@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import jfxtras.scene.control.LocalDateTimeTextField;
 
 public class AusleihvorgangAendernController {
 
@@ -24,10 +25,10 @@ public class AusleihvorgangAendernController {
     private ComboBox<Fahrzeug> fahrzeugComboBox;
 
     @FXML
-    private DatePicker startdatumPicker;
+    private LocalDateTimeTextField startdatumPicker;
 
     @FXML
-    private DatePicker enddatumPicker;
+    private LocalDateTimeTextField enddatumPicker;
 
     @FXML
     private Button speichernButton;
@@ -50,13 +51,13 @@ public class AusleihvorgangAendernController {
     @FXML
     private void speichernButtonClicked(ActionEvent event) {
         //Prüfen ob alle Felder ausgefüllt sind
-        if (teilnehmerComboBox.getValue() == null || fahrzeugComboBox.getValue() == null || startdatumPicker.getValue() == null || enddatumPicker.getValue() == null || gefahreneKilometerTextField.getText().isEmpty()) {
+        if (teilnehmerComboBox.getValue() == null || fahrzeugComboBox.getValue() == null || startdatumPicker.getLocalDateTime() == null || enddatumPicker.getLocalDateTime() == null || gefahreneKilometerTextField.getText().isEmpty()) {
             showAlert("Bitte füllen Sie alle Felder aus.");
             return;
         }
 
         //Prüfen ob Startdatum vor Enddatum liegt
-        if (startdatumPicker.getValue().isAfter(enddatumPicker.getValue())) {
+        if (startdatumPicker.getLocalDateTime().isAfter(enddatumPicker.getLocalDateTime())) {
             showAlert("Das Startdatum muss vor dem Enddatum liegen.");
             return;
         }
@@ -77,8 +78,8 @@ public class AusleihvorgangAendernController {
         if (teilnehmer != null && fahrzeug != null) {
             selectedAusleihvorgang.setTeilnehmer(teilnehmer);
             selectedAusleihvorgang.setFahrzeug(fahrzeug);
-            selectedAusleihvorgang.setStartdatum(startdatumPicker.getValue().atStartOfDay());
-            selectedAusleihvorgang.setEnddatum(enddatumPicker.getValue().atStartOfDay());
+            selectedAusleihvorgang.setStartdatum(startdatumPicker.getLocalDateTime());
+            selectedAusleihvorgang.setEnddatum(enddatumPicker.getLocalDateTime());
             selectedAusleihvorgang.setGefahreneKilometer(Integer.parseInt(gefahreneKilometerTextField.getText()));
 
             // Speichern des geänderten Ausleihvorgangs
@@ -207,8 +208,10 @@ public class AusleihvorgangAendernController {
             teilnehmerComboBox.getSelectionModel().select(selectedAusleihvorgang.getTeilnehmer());
             fahrzeugComboBox.getSelectionModel().select(selectedAusleihvorgang.getFahrzeug());
 
-            startdatumPicker.setValue(selectedAusleihvorgang.getStartdatum().toLocalDate());
-            enddatumPicker.setValue(selectedAusleihvorgang.getEnddatum().toLocalDate());
+
+            // Anzeige des Start- und Enddatums konfigurieren
+            startdatumPicker.setLocalDateTime(selectedAusleihvorgang.getStartdatum());
+            enddatumPicker.setLocalDateTime(selectedAusleihvorgang.getEnddatum());
         }
     }
 

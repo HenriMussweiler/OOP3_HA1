@@ -18,12 +18,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.scene.control.LocalDateTimePicker;
+import jfxtras.scene.control.LocalDateTimeTextField;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class AusleihvorgangController {
 
@@ -51,10 +52,10 @@ public class AusleihvorgangController {
     private ComboBox<String> fahrzeugComboBox;
 
     @FXML
-    private DatePicker startdatumPicker;
+    private LocalDateTimeTextField startdatumPicker;
 
     @FXML
-    private DatePicker enddatumPicker;
+    private LocalDateTimeTextField enddatumPicker;
 
     @FXML
     private Button stornierenButton;
@@ -96,9 +97,9 @@ public class AusleihvorgangController {
         ausleihvorgangService = new AusleihvorgangService();
 
         //Testdaten erstellen
-        Ausleihvorgang ausleihvorgang1 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(4), LocalDateTime.parse("2023-11-02T00:00:00"), LocalDateTime.parse("2023-11-06T00:00:00"), false, 0, null);
-        Ausleihvorgang ausleihvorgang2 = new Ausleihvorgang(fahrzeugService.find(7), teilnehmerService.find(4), LocalDateTime.parse("2023-11-07T00:00:00"), LocalDateTime.parse("2023-11-13T00:00:00"), false, 0, null);
-        Ausleihvorgang ausleihvorgang3 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(5), LocalDateTime.parse("2023-11-01T00:00:00"), LocalDateTime.parse("2023-11-02T00:00:00"), false, 0, null);
+        Ausleihvorgang ausleihvorgang1 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(4), LocalDateTime.parse("2023-11-02T00:00:00"), LocalDateTime.parse("2023-11-06T00:00:00"), false, false, 0, null);
+        Ausleihvorgang ausleihvorgang2 = new Ausleihvorgang(fahrzeugService.find(7), teilnehmerService.find(4), LocalDateTime.parse("2023-11-07T00:00:00"), LocalDateTime.parse("2023-11-13T00:00:00"), false, false, 0, null);
+        Ausleihvorgang ausleihvorgang3 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(5), LocalDateTime.parse("2023-11-01T00:00:00"), LocalDateTime.parse("2023-11-02T00:00:00"), false, false, 0, null);
 
         //Testdaten in der Datenbank speichern
         ausleihvorgangService.save(ausleihvorgang1);
@@ -166,6 +167,7 @@ public class AusleihvorgangController {
         //Prüfen welche Ausleihvorgänge abgeschlossen sind und diese aus der Liste entfernen
         //Wenn abgeschlossen = true, dann wird das Objekt aus der Liste entfernt
         ausleihvorgang.removeIf(Ausleihvorgang::getAbgeschlossen);
+        ausleihvorgang.removeIf(Ausleihvorgang::getStorniert);
 
         ausleihvorgangTableView.setItems(ausleihvorgang);
     }
@@ -190,8 +192,11 @@ public class AusleihvorgangController {
         //Ausleihvorgang-Objekt aus der Datenbank auslesen
         Ausleihvorgang ausleihvorgang = ausleihvorgangService.find(ausleihvorgangId);
 
-        //Ausleihvorgang-Objekt aus der Datenbank löschen
-        ausleihvorgangService.delete(ausleihvorgang.getAusleihvorgangId());
+        //Ausleihvorgang-Objekt auf storniert setzen
+        ausleihvorgang.setStorniert(true);
+
+        //Ausleihvorgang-Objekt in der Datenbank aktualisieren
+        ausleihvorgangService.update(ausleihvorgang);
 
         //Zeige eine Erfolgsmeldung an
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -217,24 +222,27 @@ public class AusleihvorgangController {
     private void reservierenButtonClicked(ActionEvent actionEvent) {
         String teilnehmer = teilnehmerComboBox.getValue();
         String fahrzeug = fahrzeugComboBox.getValue();
-        String startdatum = startdatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String enddatum = enddatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String startdatum = startdatumPicker.getLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String enddatum = enddatumPicker.getLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//        String startdatum = startdatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//        String enddatum = enddatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         if (teilnehmer == null || fahrzeug == null || startdatum == null || enddatum == null) {
             showErrorAlert("Bitte füllen Sie alle Felder aus.");
             return;
         }
 
+        //TODO: Prüfen ob das wirklich klappt
         //Prüfen ob das Fahrzeug bereits ausgeliehen ist
         if (ausleihvorgangService.findAll().stream()
                 .filter(ausleihvorgang -> ausleihvorgang.getFahrzeug().getModell().equals(fahrzeug))
-                .anyMatch(ausleihvorgang -> ausleihvorgang.getEnddatum().isAfter(startdatumPicker.getValue().atStartOfDay()) && ausleihvorgang.getStartdatum().isBefore(enddatumPicker.getValue().atStartOfDay()))) {
+                .anyMatch(ausleihvorgang -> ausleihvorgang.getEnddatum().isAfter(LocalDateTime.parse(startdatum)) && ausleihvorgang.getStartdatum().isBefore(LocalDateTime.parse(enddatum)))) {
             showErrorAlert("Das Fahrzeug ist in diesem Zeitraum bereits ausgeliehen.");
             return;
         }
 
         //Prüfen ob Startdatum vor dem Enddatum liegt
-        if (startdatumPicker.getValue().isAfter(enddatumPicker.getValue())) {
+        if (startdatumPicker.getLocalDateTime().isAfter(enddatumPicker.getLocalDateTime())) {
             showErrorAlert("Das Startdatum muss vor dem Enddatum liegen.");
             return;
         }
@@ -280,8 +288,8 @@ public class AusleihvorgangController {
         //Felder leeren
         teilnehmerComboBox.setValue(null);
         fahrzeugComboBox.setValue(null);
-        startdatumPicker.setValue(null);
-        enddatumPicker.setValue(null);
+        startdatumPicker.setDisplayedLocalDateTime(null);
+        enddatumPicker.setDisplayedLocalDateTime(null);
 
         //TableView aktualisieren
         ausleihvorgangTableView.getItems().add(ausleihvorgang);

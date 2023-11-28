@@ -1,10 +1,6 @@
 package controller;
 
-import core.model.SharingStandort;
-import controller.SharingStandortController;
-import controller.TeilnehmerController;
-import controller.FahrzeugController;
-import controller.AusleihvorgangController;
+import core.service.FahrzeugService;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,6 +41,10 @@ public class MainController {
     @FXML
     private void rechnungButtonClicked() {
         loadView("/ui/rechnung.fxml", "Rechnungsverwaltung");
+    }
+
+    @FXML
+    void initialize() {
     }
 
     private void loadView(String resource, String title) {

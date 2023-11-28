@@ -24,7 +24,7 @@ public class CarSharingApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //Testdaten hinzufügen
+        //Testdaten erstellen
         Platform.runLater(() -> mainController.createTestData());
     }
 

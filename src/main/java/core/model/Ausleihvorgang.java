@@ -29,6 +29,9 @@ public class Ausleihvorgang {
     @Column(name = "abgeschlossen")
     private boolean abgeschlossen;
 
+    @Column(name = "storniert")
+    private boolean storniert;
+
     @Column(name = "gefahrene_kilometer")
     private int gefahreneKilometer;
 
@@ -38,12 +41,13 @@ public class Ausleihvorgang {
 
     // Konstruktor, Getter und Setter hier...
 
-    public Ausleihvorgang(Fahrzeug fahrzeug, Teilnehmer teilnehmer, LocalDateTime startdatum, LocalDateTime enddatum, boolean abgeschlossen, int gefahreneKilometer, Rechnung rechnung) {
+    public Ausleihvorgang(Fahrzeug fahrzeug, Teilnehmer teilnehmer, LocalDateTime startdatum, LocalDateTime enddatum, boolean abgeschlossen, boolean storniert, int gefahreneKilometer, Rechnung rechnung) {
         this.fahrzeug = fahrzeug;
         this.teilnehmer = teilnehmer;
         this.startdatum = startdatum;
         this.enddatum = enddatum;
         this.abgeschlossen = false;
+        this.storniert = false;
         this.gefahreneKilometer = gefahreneKilometer;
         this.rechnung = rechnung;
     }
@@ -106,6 +110,14 @@ public class Ausleihvorgang {
         this.abgeschlossen = abgeschlossen;
     }
 
+    public boolean getStorniert() {
+        return storniert;
+    }
+
+    public void setStorniert(boolean storniert) {
+        this.storniert = storniert;
+    }
+
     public int getGefahreneKilometer() {
         return gefahreneKilometer;
     }
@@ -121,6 +133,4 @@ public class Ausleihvorgang {
     public void setRechnung(Rechnung rechnung) {
         this.rechnung = rechnung;
     }
-
-    // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
 }

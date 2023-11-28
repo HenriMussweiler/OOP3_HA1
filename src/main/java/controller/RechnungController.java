@@ -58,7 +58,7 @@ public class RechnungController {
             ausleihvorgangService = new AusleihvorgangService();
             List<Ausleihvorgang> ausleihvorgänge = ausleihvorgangService.findAll();
             for (Ausleihvorgang ausleihvorgang : ausleihvorgänge) {
-                if (ausleihvorgang.getAbgeschlossen()) {
+                if (ausleihvorgang.getAbgeschlossen() || ausleihvorgang.getStorniert()) {
                     teilnehmerList.add(ausleihvorgang.getTeilnehmer().getName());
                 }
             }
@@ -108,19 +108,21 @@ public class RechnungController {
         LocalDateTime rechnungsdatum = LocalDateTime.now();
         Rechnung rechnung = new Rechnung(teilnehmer, rechnungsdatum, totalAmount);
 
-        List<Ausleihvorgang> ausleihvorgaenge = getRelevantAusleihvorgaenge(teilnehmer, startdatum, enddatum);
-        for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
+        List<Ausleihvorgang> relevanteAusleihvorgaenge = getRelevantAusleihvorgaenge(teilnehmer, startdatum, enddatum);
+        for (Ausleihvorgang ausleihvorgang : relevanteAusleihvorgaenge) {
             rechnung.addAusleihvorgang(ausleihvorgang);
         }
-        if (ausleihvorgaenge.isEmpty()) {
+
+        if (relevanteAusleihvorgaenge.isEmpty()) {
             showErrorAlert("Keine Ausleihvorgänge gefunden.");
             return;
         }
 
         rechnungService.save(rechnung);
-        for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
+        for (Ausleihvorgang ausleihvorgang : relevanteAusleihvorgaenge) {
             ausleihvorgangService.save(ausleihvorgang);
         }
+
         showAlert("Rechnung generiert:\n" + invoiceText);
     }
 
@@ -133,13 +135,9 @@ public class RechnungController {
             for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
 
                 if (ausleihvorgang.getTeilnehmer().getTeilnehmerId() == (teilnehmer.getTeilnehmerId())) {
-                    System.out.println("Step 1");
-                    if (ausleihvorgang.getAbgeschlossen()) {
-                        System.out.println("Step 2");
+                    if (ausleihvorgang.getAbgeschlossen() || ausleihvorgang.getStorniert()) {
                         if (ausleihvorgang.getRechnung() == null) {
-                            System.out.println("Step 3");
                             if (ausleihvorgang.getStartdatum().isAfter(startdatum.atTime(0, 0, 0)) && ausleihvorgang.getEnddatum().isBefore(enddatum.atTime(23, 59, 59)) || ausleihvorgang.getStartdatum().isEqual(startdatum.atTime(0, 0, 0)) || ausleihvorgang.getEnddatum().isEqual(enddatum.atTime(23, 59, 59))) {
-                                System.out.println("Step 4");
                                 ausleihenVonTeilnehmer.add(ausleihvorgang);
                             }
                         }
@@ -161,9 +159,17 @@ public class RechnungController {
             showErrorAlert("Keine Ausleihvorgänge gefunden.");
         }
 
+        //TotalAmount berechnen (Gefahrene Kilometer * 0.8 und Stornierte Ausleihen mit fix 50€)
         for (Ausleihvorgang ausleihvorgang : ausleihenVonTeilnehmer) {
-            totalAmount += ausleihvorgang.getGefahreneKilometer() * 0.8;
+            if (ausleihvorgang.getStorniert()) {
+                totalAmount += 50;
+            } else if (ausleihvorgang.getAbgeschlossen()) {
+                totalAmount += ausleihvorgang.getGefahreneKilometer() * 0.8;
+            }
         }
+
+        //TotalAmount auf 2 Nachkommastellen runden
+        totalAmount = Math.round(totalAmount * 100.0) / 100.0;
 
         return totalAmount;
     }
