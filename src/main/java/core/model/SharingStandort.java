@@ -8,7 +8,7 @@ import java.util.List;
 public class SharingStandort {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sharing_standort_generator")
     @Column(name = "sharing_standort_id")
     private Long sharingStandortId;
 

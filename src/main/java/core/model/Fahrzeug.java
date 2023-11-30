@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Fahrzeug {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fahrzeug_generator")
     @Column(name = "fahrzeug_id")
     private Long fahrzeugId;
 
@@ -42,12 +42,15 @@ public class Fahrzeug {
     @JoinColumn(name = "sharing_standort_id")
     private SharingStandort sharingStandort;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     // Konstruktor, Getter und Setter hier...
 
     public Fahrzeug() {
     }
 
-    public Fahrzeug(String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoffart, int baujahr, int kilometerstand, String getriebe, int sitzplaetze, SharingStandort sharingStandort) {
+    public Fahrzeug(String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoffart, int baujahr, int kilometerstand, String getriebe, int sitzplaetze, SharingStandort sharingStandort, boolean deleted) {
         this.hersteller = hersteller;
         this.modell = modell;
         this.ausstattung = ausstattung;
@@ -58,6 +61,7 @@ public class Fahrzeug {
         this.getriebe = getriebe;
         this.sitzplaetze = sitzplaetze;
         this.sharingStandort = sharingStandort;
+        this.deleted = deleted;
     }
 
     public Fahrzeug(String hersteller, String modell, String ausstattung, int leistungKw, String kraftstoff, int baujahr, int kilometerstand, int sitzplaetze, String sharingStandort) {
@@ -160,5 +164,11 @@ public class Fahrzeug {
         this.sharingStandort = sharingStandort;
     }
 
-    // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

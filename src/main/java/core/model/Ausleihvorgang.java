@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Ausleihvorgang {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ausleihvorgang_generator")
     @Column(name = "ausleihvorgang_id")
     private Long ausleihvorgangId;
 

@@ -10,7 +10,7 @@ import java.util.List;
 public class Rechnung {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rechnung_generator")
     @Column(name = "rechnung_id")
     private Long rechnungId;
 

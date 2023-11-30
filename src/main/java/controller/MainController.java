@@ -1,13 +1,11 @@
 package controller;
 
-import core.service.FahrzeugService;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-
 import java.io.IOException;
 
 public class MainController {

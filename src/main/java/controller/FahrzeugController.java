@@ -103,8 +103,8 @@ public class FahrzeugController {
 
     public void createAndSaveTestFahrzeuge() {
         //Testdaten hinzufügen
-        Fahrzeug fahrzeug1 = new Fahrzeug("VW", "Golf", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(1));
-        Fahrzeug fahrzeug2 = new Fahrzeug("VW", "Polo", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(2));
+        Fahrzeug fahrzeug1 = new Fahrzeug("VW", "Golf", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(1), false);
+        Fahrzeug fahrzeug2 = new Fahrzeug("VW", "Polo", "Klimaanlage, Navi", 85, "Benzin", 2018, 10000, "Automatik", 5, (SharingStandort) sharingStandortService.find(2), false);
 
         //Testdaten speichern
         fahrzeugService.save(fahrzeug1);
@@ -140,15 +140,36 @@ public class FahrzeugController {
             };
         });
 
+        //Fahrzeuge aus der Datenquelle laden
         ObservableList<Fahrzeug> fahrzeuge = FXCollections.observableArrayList(fahrzeugService.findAll());
+
+        //Nur nicht gelöschte Fahrzeuge anzeigen
+        fahrzeuge = FXCollections.observableArrayList(fahrzeuge.stream()
+                .filter(fahrzeug -> !fahrzeug.getDeleted())
+                .collect(Collectors.toList())
+        );
+
+        //Fahrzeuge in TableView laden
         fahrzeugTableView.setItems(fahrzeuge);
+
     }
 
     protected void initFahrzeugIdComboBox() {
+        // Hier kannst du die Logik für die Anzeige der Fahrzeug-IDs implementieren
+
+        //Fahrzeug-IDs aus der Datenquelle laden
         ObservableList<Long> fahrzeugIds = FXCollections.observableArrayList(fahrzeugService.findAll().stream()
                 .map(Fahrzeug::getFahrzeugId)
                 .collect(Collectors.toList())
         );
+
+        //Nur nicht gelöschte Fahrzeuge anzeigen
+        fahrzeugIds = FXCollections.observableArrayList(fahrzeugIds.stream()
+                .filter(fahrzeugId -> !fahrzeugService.find(fahrzeugId).getDeleted())
+                .collect(Collectors.toList())
+        );
+
+        //Fahrzeug-IDs in ComboBox laden
         fahrzeugIdComboBox.setItems(fahrzeugIds);
     }
 
@@ -218,7 +239,6 @@ public class FahrzeugController {
             }
 
 
-
             //Fragen ob wirklich gelöscht werden soll
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Fahrzeug löschen");
@@ -232,8 +252,15 @@ public class FahrzeugController {
 
 
             //Fahrzeug löschen
-            fahrzeugService.delete(fahrzeug.getFahrzeugId());
+            fahrzeug.setDeleted(true);
+            fahrzeugService.update(fahrzeug);
             showAlert("Fahrzeug erfolgreich gelöscht.");
+
+            //TableView aktualisieren
+            initFahrzeugTableView();
+
+            //ComboBox aktualisieren
+            initFahrzeugIdComboBox();
         } catch (Exception e) {
             showAlert("Fahrzeug konnte nicht gelöscht werden.");
         }
@@ -243,8 +270,8 @@ public class FahrzeugController {
         List<Ausleihvorgang> ausleihvorgaenge = ausleihvorgangService.findAll();
         for (Ausleihvorgang ausleihvorgang : ausleihvorgaenge) {
             if (ausleihvorgang.getFahrzeug().getFahrzeugId() == fahrzeug.getFahrzeugId()) {
-                //Prüfen ob das Enddatum des Ausleihvorgangs vor dem aktuellen Datum liegt
-                if (ausleihvorgang.getEnddatum().isAfter(java.time.LocalDateTime.now())) {
+                //Prüfen ob der Ausleihvorgang abgeschlossen ist
+                if (!ausleihvorgang.getAbgeschlossen()) {
                     return true;
                 } else {
                     return false;

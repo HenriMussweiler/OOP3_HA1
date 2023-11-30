@@ -140,7 +140,7 @@ public class FahrzeugErstellenController {
         } else {
             try {
                 //Objekt anlegen
-                Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(kilometerstand), getriebe, Integer.parseInt(sitzplaetze), sharingStandort);
+                Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(kilometerstand), getriebe, Integer.parseInt(sitzplaetze), sharingStandort, false);
                 //Objekt speichern
                 fahrzeugController.getFahrzeugService().save(newFahrzeug);
                 // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren

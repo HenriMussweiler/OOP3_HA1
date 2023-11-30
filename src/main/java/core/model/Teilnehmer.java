@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Teilnehmer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "teilnehmer_generator")
     @Column(name = "teilnehmer_id")
     private Long teilnehmerId;
 

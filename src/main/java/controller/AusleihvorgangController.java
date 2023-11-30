@@ -97,9 +97,9 @@ public class AusleihvorgangController {
         ausleihvorgangService = new AusleihvorgangService();
 
         //Testdaten erstellen
-        Ausleihvorgang ausleihvorgang1 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(4), LocalDateTime.parse("2023-11-02T00:00:00"), LocalDateTime.parse("2023-11-06T00:00:00"), false, false, 0, null);
-        Ausleihvorgang ausleihvorgang2 = new Ausleihvorgang(fahrzeugService.find(7), teilnehmerService.find(4), LocalDateTime.parse("2023-11-07T00:00:00"), LocalDateTime.parse("2023-11-13T00:00:00"), false, false, 0, null);
-        Ausleihvorgang ausleihvorgang3 = new Ausleihvorgang(fahrzeugService.find(6), teilnehmerService.find(5), LocalDateTime.parse("2023-11-01T00:00:00"), LocalDateTime.parse("2023-11-02T00:00:00"), false, false, 0, null);
+        Ausleihvorgang ausleihvorgang1 = new Ausleihvorgang(fahrzeugService.find(1), teilnehmerService.find(1), LocalDateTime.parse("2023-11-02T00:00:00"), LocalDateTime.parse("2023-11-06T00:00:00"), false, false, 0, null);
+        Ausleihvorgang ausleihvorgang2 = new Ausleihvorgang(fahrzeugService.find(2), teilnehmerService.find(1), LocalDateTime.parse("2023-11-07T00:00:00"), LocalDateTime.parse("2023-11-13T00:00:00"), false, false, 0, null);
+        Ausleihvorgang ausleihvorgang3 = new Ausleihvorgang(fahrzeugService.find(1), teilnehmerService.find(2), LocalDateTime.parse("2023-11-01T00:00:00"), LocalDateTime.parse("2023-11-02T00:00:00"), false, false, 0, null);
 
         //Testdaten in der Datenbank speichern
         ausleihvorgangService.save(ausleihvorgang1);

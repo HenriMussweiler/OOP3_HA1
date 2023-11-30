@@ -58,7 +58,7 @@ public class RechnungController {
             ausleihvorgangService = new AusleihvorgangService();
             List<Ausleihvorgang> ausleihvorgänge = ausleihvorgangService.findAll();
             for (Ausleihvorgang ausleihvorgang : ausleihvorgänge) {
-                if (ausleihvorgang.getAbgeschlossen() || ausleihvorgang.getStorniert()) {
+                if (ausleihvorgang.getAbgeschlossen() || ausleihvorgang.getStorniert() && ausleihvorgang.getRechnung() == null) {
                     teilnehmerList.add(ausleihvorgang.getTeilnehmer().getName());
                 }
             }
@@ -99,6 +99,13 @@ public class RechnungController {
         }
 
         generateInvoice(selectedTeilnehmer, startdatum, enddatum);
+
+        //Felder leeren
+        teilnehmerComboBox.setValue(null);
+        startdatumPicker.setValue(null);
+        enddatumPicker.setValue(null);
+
+        initComboBoxes();
     }
 
     private void generateInvoice(Teilnehmer teilnehmer, LocalDate startdatum, LocalDate enddatum) {
@@ -154,10 +161,6 @@ public class RechnungController {
     private double calculateTotalAmount(Teilnehmer teilnehmer, LocalDate startdatum, LocalDate enddatum) {
         List<Ausleihvorgang> ausleihenVonTeilnehmer = getRelevantAusleihvorgaenge(teilnehmer, startdatum, enddatum);
         double totalAmount = 0;
-
-        if (ausleihenVonTeilnehmer.isEmpty()) {
-            showErrorAlert("Keine Ausleihvorgänge gefunden.");
-        }
 
         //TotalAmount berechnen (Gefahrene Kilometer * 0.8 und Stornierte Ausleihen mit fix 50€)
         for (Ausleihvorgang ausleihvorgang : ausleihenVonTeilnehmer) {
