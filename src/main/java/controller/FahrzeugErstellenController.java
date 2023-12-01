@@ -58,7 +58,6 @@ public class FahrzeugErstellenController {
         if (fahrzeugController != null) {
             initSharingComboBox();
         } else {
-            // Handle null fahrzeugController, z.B. durch eine Fehlermeldung oder ein Log-Statement
             showAlert("Fehler beim Initialisieren des FahrzeugControllers.");
         }
         initGetriebeComboBox();
@@ -66,19 +65,16 @@ public class FahrzeugErstellenController {
     }
 
     private void initKraftstoffComboBox() {
-        // Hier kannst du die Logik für die Anzeige der Kraftstoffe implementieren
         ObservableList<String> kraftstoffe = FXCollections.observableArrayList("Benzin", "Diesel", "Elektro", "Hybrid/Diesel", "Hybrid/Benzin");
         kraftstoffField.setItems(kraftstoffe);
     }
 
     private void initGetriebeComboBox() {
-        // Hier kannst du die Logik für die Anzeige der Getriebe implementieren
         ObservableList<String> getriebe = FXCollections.observableArrayList("Automatik", "Manuell");
         getriebeField.setItems(getriebe);
     }
 
     private void initSharingComboBox() {
-        // Hier kannst du die Logik für die Anzeige der Sharing-Standorte implementieren
         List<SharingStandort> sharingStandortList = fahrzeugController.getSharingStandortService().findAll();
 
         ObservableList<SharingStandort> sharingStandorte = FXCollections.observableArrayList(sharingStandortList);
@@ -109,7 +105,6 @@ public class FahrzeugErstellenController {
 
             @Override
             public SharingStandort fromString(String string) {
-                // Du kannst hier die Umwandlung von String zu SharingStandort implementieren, falls notwendig
                 return null;
             }
         });
@@ -143,7 +138,6 @@ public class FahrzeugErstellenController {
                 Fahrzeug newFahrzeug = new Fahrzeug(hersteller, modell, ausstattung, Integer.parseInt(leistung), kraftstoff, Integer.parseInt(baujahr), Integer.parseInt(kilometerstand), getriebe, Integer.parseInt(sitzplaetze), sharingStandort, false);
                 //Objekt speichern
                 fahrzeugController.getFahrzeugService().save(newFahrzeug);
-                // Hier könntest du die Logik zum Speichern des neuen Fahrzeugs implementieren
                 showAlert("Fahrzeug erfolgreich angelegt.");
 
                 //TableView aktualisieren
@@ -175,7 +169,6 @@ public class FahrzeugErstellenController {
 
     @FXML
     private void zurueckButtonClicked() {
-        // Hier kannst du die Logik für den "Zurück"-Button implementieren
         Stage stage = (Stage) zurueckButton.getScene().getWindow();
         stage.close();
     }

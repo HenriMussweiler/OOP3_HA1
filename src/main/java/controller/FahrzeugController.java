@@ -107,7 +107,6 @@ public class FahrzeugController {
     }
 
     protected void initFahrzeugTableView() {
-        // Hier kannst du die Logik für die Anzeige der Fahrzeuge implementieren
         fahrzeugIdColumn.setCellValueFactory(new PropertyValueFactory<>("fahrzeugId"));
         herstellerColumn.setCellValueFactory(new PropertyValueFactory<>("hersteller"));
         modellColumn.setCellValueFactory(new PropertyValueFactory<>("modell"));
@@ -150,8 +149,6 @@ public class FahrzeugController {
     }
 
     protected void initFahrzeugIdComboBox() {
-        // Hier kannst du die Logik für die Anzeige der Fahrzeug-IDs implementieren
-
         //Fahrzeug-IDs aus der Datenquelle laden
         ObservableList<Long> fahrzeugIds = FXCollections.observableArrayList(fahrzeugService.findAll().stream()
                 .map(Fahrzeug::getFahrzeugId)
@@ -278,7 +275,6 @@ public class FahrzeugController {
 
     @FXML
     private void zurueckButtonClicked() {
-        // Hier kannst du die Logik für den "Zurück"-Button implementieren
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main.fxml"));
             Parent root = loader.load();

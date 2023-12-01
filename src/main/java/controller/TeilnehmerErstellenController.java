@@ -57,7 +57,6 @@ public class TeilnehmerErstellenController {
 
     @FXML
     private void speichernButtonClicked() {
-        // Implementiere die Logik für das Speichern des Teilnehmers
         try {
             String name = nameField.getText();
             String vorname = vornameField.getText();
@@ -116,7 +115,6 @@ public class TeilnehmerErstellenController {
 
     @FXML
     private void zurueckButtonClicked() {
-        // Implementiere die Logik für den Zurück-Button
         Stage stage = (Stage) zurueckButton.getScene().getWindow();
         stage.close();
     }

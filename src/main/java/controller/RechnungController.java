@@ -195,7 +195,6 @@ public class RechnungController {
 
     @FXML
     private void zurueckButtonClicked() {
-        // Hier kannst du die Logik für den "Zurück"-Button implementieren
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main.fxml"));
             Parent root = loader.load();

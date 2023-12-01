@@ -67,7 +67,6 @@ public class FahrzeugAendernController {
             initGetriebeComboBox();
             initKraftstoffComboBox();
         } else {
-            // Handle null fahrzeugController, z.B. durch eine Fehlermeldung oder ein Log-Statement
             showAlert("Fehler beim Initialisieren des FahrzeugControllers.");
         }
     }
@@ -116,7 +115,6 @@ public class FahrzeugAendernController {
 
             @Override
             public SharingStandort fromString(String string) {
-                // Du kannst hier die Umwandlung von String zu SharingStandort implementieren, falls notwendig
                 return null;
             }
         });
@@ -160,8 +158,8 @@ public class FahrzeugAendernController {
                 showAlert("Bitte füllen Sie alle Felder aus.");
             } else {
                 try {
-                    // Hier könntest du die Logik zum Speichern der Änderungen implementieren
                     showAlert("Fahrzeug erfolgreich aktualisiert.");
+
                     //Objekt aktualisieren
                     selectedFahrzeug.setHersteller(hersteller);
                     selectedFahrzeug.setModell(modell);
@@ -194,13 +192,11 @@ public class FahrzeugAendernController {
 
     @FXML
     private void zurueckButtonClicked() {
-        // Hier kannst du die Logik für den "Zurück"-Button implementieren
         Stage stage = (Stage) zurueckButton.getScene().getWindow();
         stage.close();
     }
 
     private void showAlert(String message) {
-        // Hier könntest du die Logik für das Anzeigen einer Warnung implementieren
         System.out.println(message);
     }
 

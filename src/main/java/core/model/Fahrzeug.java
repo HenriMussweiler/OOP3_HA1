@@ -45,8 +45,6 @@ public class Fahrzeug {
     @Column(name = "deleted")
     private boolean deleted;
 
-    // Konstruktor, Getter und Setter hier...
-
     public Fahrzeug() {
     }
 

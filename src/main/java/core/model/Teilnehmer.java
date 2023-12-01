@@ -38,8 +38,6 @@ public class Teilnehmer {
     @Column(name = "telefon")
     private String telefon;
 
-    // Konstruktor, Getter und Setter hier...
-
     public Teilnehmer() {
     }
 
@@ -134,6 +132,4 @@ public class Teilnehmer {
     public void setTelefon(String telefon) {
         this.telefon = telefon;
     }
-
-    // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
 }

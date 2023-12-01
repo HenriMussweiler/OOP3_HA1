@@ -41,8 +41,6 @@ public class Rechnung {
     @Column(name = "gesamtsumme")
     private double gesamtsumme;
 
-    // Konstruktor, Getter und Setter hier...
-
     public Rechnung(Teilnehmer teilnehmer, LocalDateTime rechnungsdatum, List<Ausleihvorgang> ausleihvorgange, double gesamtsumme) {
         this.teilnehmer = teilnehmer;
         this.rechnungsdatum = rechnungsdatum;
@@ -98,6 +96,4 @@ public class Rechnung {
     public void setGesamtsumme(double gesamtsumme) {
         this.gesamtsumme = gesamtsumme;
     }
-
-    // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
 }

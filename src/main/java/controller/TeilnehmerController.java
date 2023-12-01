@@ -73,7 +73,6 @@ public class TeilnehmerController {
 
     @FXML
     private void hinzufuegenButtonClicked() {
-        // Implementiere die Logik zum Hinzufügen eines Teilnehmers
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/teilnehmerErstellen.fxml"));
             Parent root = loader.load();
@@ -140,8 +139,6 @@ public class TeilnehmerController {
                return;
            }
 
-
-
             //Fragen ob wirklich gelöscht werden soll
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Teilnehmer löschen");
@@ -152,7 +149,6 @@ public class TeilnehmerController {
             if (alert.getResult() != ButtonType.OK) {
                 return;
             }
-
 
             //Teilnehmer löschen
             teilnehmerService.delete(teilnehmer.getTeilnehmerId());

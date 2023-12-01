@@ -18,8 +18,6 @@ public class SharingStandort {
     @OneToMany(mappedBy = "sharingStandort")
     private List<Fahrzeug> fahrzeuge;
 
-    // Konstruktor, Getter und Setter hier...
-
     public SharingStandort() {
     }
 
@@ -47,6 +45,4 @@ public class SharingStandort {
     public void setStandortName(String standortName) {
         this.standortName = standortName;
     }
-
-    // Weitere Methoden und Annotationen können je nach Bedarf hinzugefügt werden.
 }

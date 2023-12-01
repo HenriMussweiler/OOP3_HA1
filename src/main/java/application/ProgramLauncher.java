@@ -1,3 +1,6 @@
+//Henri Mussweiler
+//Matikelnummer: 1038747
+
 package application;
 
 public class ProgramLauncher {
