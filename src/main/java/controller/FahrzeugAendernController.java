@@ -181,6 +181,13 @@ public class FahrzeugAendernController {
                 } catch (Exception e) {
                     showAlert("Fahrzeug konnte nicht aktualisiert werden.");
                 }
+
+                //TableView aktualisieren
+                fahrzeugController.initFahrzeugTableView();
+
+                //Stage schließen
+                Stage stage = (Stage) speichernButton.getScene().getWindow();
+                stage.close();
             }
         }
     }

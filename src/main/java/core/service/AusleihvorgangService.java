@@ -1,7 +1,6 @@
 package core.service;
 
 import core.model.Ausleihvorgang;
-import core.model.Fahrzeug;
 import dao.GenericDAO;
 
 import java.util.List;

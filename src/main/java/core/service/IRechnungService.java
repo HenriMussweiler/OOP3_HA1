@@ -1,7 +1,5 @@
 package core.service;
 
-import dao.GenericDAO;
-
 import java.util.List;
 
 public interface IRechnungService<Rechnung> {

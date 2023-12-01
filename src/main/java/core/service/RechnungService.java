@@ -1,7 +1,6 @@
 package core.service;
 
 import core.model.Rechnung;
-import core.model.SharingStandort;
 import dao.GenericDAO;
 
 public class RechnungService extends GenericDAO<Rechnung> implements IRechnungService<Rechnung> {

@@ -1,6 +1,5 @@
 package core.service;
 
-import core.model.Fahrzeug;
 import core.model.Teilnehmer;
 import dao.GenericDAO;
 

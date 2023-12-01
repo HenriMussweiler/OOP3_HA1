@@ -1,7 +1,5 @@
 package core.service;
 
-import core.model.Fahrzeug;
-
 import java.util.List;
 
 public interface IFahrzeugService<T> {

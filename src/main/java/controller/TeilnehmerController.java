@@ -1,13 +1,10 @@
 package controller;
 
 import core.model.Ausleihvorgang;
-import core.model.Fahrzeug;
 import core.model.Teilnehmer;
 import core.service.AusleihvorgangService;
-import core.service.IFahrzeugService;
 import core.service.ITeilnehmerService;
 import core.service.TeilnehmerService;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -214,9 +210,6 @@ public class TeilnehmerController {
         // Initialisierung, wenn nötig
         initTeilnehmerTableView();
         initTeilnehmerIdComboBox();
-
-        //Testdaten hinzufügen
-        //createAndSaveTestdaten();
     }
 
     public void createAndSaveTestdaten() {

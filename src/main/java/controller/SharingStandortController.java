@@ -27,7 +27,6 @@ public class SharingStandortController {
 
     @FXML
     private void initialize() {
-        //createTestData();
     }
 
     public void createTestData() {

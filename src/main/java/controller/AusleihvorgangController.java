@@ -18,7 +18,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.scene.control.LocalDateTimePicker;
 import jfxtras.scene.control.LocalDateTimeTextField;
 
 import java.io.IOException;
@@ -81,9 +80,6 @@ public class AusleihvorgangController {
 
     @FXML
     protected void initialize() {
-        //Testdaten erstellen
-        //createTestData();
-
         //TableView anzeigen
         ausleihvorgangService = new AusleihvorgangService();
         initTableView();
@@ -232,7 +228,6 @@ public class AusleihvorgangController {
             return;
         }
 
-        //TODO: Prüfen ob das wirklich klappt
         //Prüfen ob das Fahrzeug bereits ausgeliehen ist
         if (ausleihvorgangService.findAll().stream()
                 .filter(ausleihvorgang -> ausleihvorgang.getFahrzeug().getModell().equals(fahrzeug))
@@ -288,8 +283,8 @@ public class AusleihvorgangController {
         //Felder leeren
         teilnehmerComboBox.setValue(null);
         fahrzeugComboBox.setValue(null);
-        startdatumPicker.setDisplayedLocalDateTime(null);
-        enddatumPicker.setDisplayedLocalDateTime(null);
+        startdatumPicker.setLocalDateTime(null);
+        enddatumPicker.setLocalDateTime(null);
 
         //TableView aktualisieren
         ausleihvorgangTableView.getItems().add(ausleihvorgang);

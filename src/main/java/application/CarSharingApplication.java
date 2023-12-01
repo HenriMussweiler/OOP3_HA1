@@ -16,7 +16,7 @@ public class CarSharingApplication extends Application {
         Parent root = loader.load();
 
         MainController mainController = loader.getController();
-        mainController.setPrimaryStage(primaryStage); // Setze die primaryStage in den MainController
+        mainController.setPrimaryStage(primaryStage);
 
         Scene scene = new Scene(root);
 

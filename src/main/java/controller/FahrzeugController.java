@@ -15,9 +15,7 @@ import core.model.Fahrzeug;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.scene.control.Alert;
@@ -96,9 +94,6 @@ public class FahrzeugController {
     private void initialize() {
         initFahrzeugTableView();
         initFahrzeugIdComboBox();
-
-        //Testdaten hinzufügen
-        //createAndSaveTestFahrzeuge();
     }
 
     public void createAndSaveTestFahrzeuge() {
