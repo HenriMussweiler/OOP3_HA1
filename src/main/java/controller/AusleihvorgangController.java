@@ -220,8 +220,6 @@ public class AusleihvorgangController {
         String fahrzeug = fahrzeugComboBox.getValue();
         String startdatum = startdatumPicker.getLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         String enddatum = enddatumPicker.getLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//        String startdatum = startdatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-//        String enddatum = enddatumPicker.getValue().atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 
         if (teilnehmer == null || fahrzeug == null || startdatum == null || enddatum == null) {
             showErrorAlert("Bitte füllen Sie alle Felder aus.");

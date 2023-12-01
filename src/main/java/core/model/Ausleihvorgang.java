@@ -39,8 +39,6 @@ public class Ausleihvorgang {
     @JoinColumn(name = "rechnung_id")
     private Rechnung rechnung;
 
-    // Konstruktor, Getter und Setter hier...
-
     public Ausleihvorgang(Fahrzeug fahrzeug, Teilnehmer teilnehmer, LocalDateTime startdatum, LocalDateTime enddatum, boolean abgeschlossen, boolean storniert, int gefahreneKilometer, Rechnung rechnung) {
         this.fahrzeug = fahrzeug;
         this.teilnehmer = teilnehmer;

@@ -104,9 +104,6 @@ public class AusleihvorgangAendernController {
             selectedAusleihvorgang.setAbgeschlossen(true);
             ausleihvorgangService.update(selectedAusleihvorgang);
 
-            //Ausleihvorgang aus der TableView entfernen
-
-
             // Schließen des Fensters
             Stage stage = (Stage) speichernButton.getScene().getWindow();
             stage.close();
@@ -121,7 +118,6 @@ public class AusleihvorgangAendernController {
 
     @FXML
     private void zurueckButtonClicked(ActionEvent event) {
-        // Hier kannst du die Logik für den Zurück-Button implementieren
         Stage stage = (Stage) zurueckButton.getScene().getWindow();
         stage.close();
     }
@@ -150,7 +146,7 @@ public class AusleihvorgangAendernController {
             //TextField mit Daten füllen
             gefahreneKilometerTextField.setText(String.valueOf(selectedAusleihvorgang.getGefahreneKilometer()));
 
-            // Zellenfabrik für die Anzeige konfigurieren
+            // Zellen für die Anzeige konfigurieren
             teilnehmerComboBox.setCellFactory(param -> new ListCell<Teilnehmer>() {
                 @Override
                 protected void updateItem(Teilnehmer item, boolean empty) {
@@ -175,7 +171,7 @@ public class AusleihvorgangAendernController {
                 }
             });
 
-            // Wertfabrik für die Anzeige konfigurieren
+            // Werte für die Anzeige konfigurieren
             teilnehmerComboBox.setConverter(new StringConverter<Teilnehmer>() {
                 @Override
                 public String toString(Teilnehmer item) {
@@ -198,8 +194,6 @@ public class AusleihvorgangAendernController {
 
                 @Override
                 public Fahrzeug fromString(String string) {
-                    // Du kannst hier die Logik für die Umwandlung von String zu Fahrzeug implementieren,
-                    // falls dies erforderlich ist (z. B. wenn du die Fahrzeugliste bearbeiten kannst).
                     return null;
                 }
             });
@@ -216,12 +210,10 @@ public class AusleihvorgangAendernController {
     }
 
     public void setAusleihvorgangController(AusleihvorgangController ausleihvorgangController) {
-        // Hier kannst du die Logik für die Zuweisung des AusleihvorgangControllers implementieren
         this.ausleihvorgangController = ausleihvorgangController;
     }
 
     public void setSelectedAusleihvorgang(Ausleihvorgang ausleihvorgang) {
-        // Hier kannst du die Logik für die Zuweisung des ausgewählten Ausleihvorgangs implementieren
         this.selectedAusleihvorgang = ausleihvorgang;
     }
 }

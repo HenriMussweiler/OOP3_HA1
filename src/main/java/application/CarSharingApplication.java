@@ -25,7 +25,7 @@ public class CarSharingApplication extends Application {
         primaryStage.show();
 
         //Testdaten erstellen
-        Platform.runLater(() -> mainController.createTestData());
+        //Platform.runLater(() -> mainController.createTestData());
     }
 
     public static void main(String[] args) {
