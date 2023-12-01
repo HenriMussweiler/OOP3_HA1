@@ -23,6 +23,12 @@
             <version>23.2.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.0</version>
+        </dependency>
+
         <!-- jpa dependencies -->
         <dependency>
             <groupId>jakarta.persistence</groupId>

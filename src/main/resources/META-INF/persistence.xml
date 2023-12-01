@@ -6,11 +6,19 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
+<!--            configure database connection (Hochschule)-->
             <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@l4asrv-oracle.wi.hs-osnabrueck.de:1521:orcl"/>
             <property name="jakarta.persistence.jdbc.user" value="STUD11"/>
             <property name="jakarta.persistence.jdbc.password" value="NewYork99"/>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.OraclePlatform"/>
+
+<!--            configure database connection (local with postgres)-->
+<!--            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
+<!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>-->
+<!--            <property name="jakarta.persistence.jdbc.user" value="postgres"/>-->
+<!--            <property name="jakarta.persistence.jdbc.password" value="mysecretpassword"/>-->
+<!--            <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.PostgreSQLPlatform"/>-->
 
 
             <!-- <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />
